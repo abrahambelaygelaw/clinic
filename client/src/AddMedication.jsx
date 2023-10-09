@@ -8,7 +8,7 @@ const AddMedication = () => {
   const [quantity, setQuantity] = useState(null);
   const [type, setType] = useState(null);
   const [description, setDescription] = useState("");
-  const [files, setFiles] = useState();
+  const [files, setFiles] = useState([]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -30,7 +30,7 @@ const AddMedication = () => {
   };
   return (
     <div className="max-w-screen-lg m-auto mt-6 p-3">
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="grid gap-6 ">
           <div>
             <label
@@ -124,10 +124,11 @@ const AddMedication = () => {
             </label>
 
             <input
-              onChange={(e) => setFiles(e.target.files[0])}
+              onChange={(e) => setFiles(e.target.files)}
               className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
               id="pictures"
               type="file"
+              multiple
             />
             <p
               className="mt-1 text-sm text-gray-500 dark:text-gray-300"
