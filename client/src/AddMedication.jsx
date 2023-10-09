@@ -8,21 +8,23 @@ const AddMedication = () => {
   const [quantity, setQuantity] = useState(null);
   const [type, setType] = useState(null);
   const [description, setDescription] = useState("");
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = {
-      name,
-      price,
-      quantity,
-      type,
-      description,
-      files,
-    };
+    const formData = new FormData();
+
+    formData.append("name", name);
+    formData.append("price", price);
+    formData.append("quantity", quantity);
+    formData.append("type", type);
+    formData.append("description", description);
+    for (let i = 0; i < files.length; i++) {
+      formData.append("files", files[i]);
+    }
+
     try {
       const response = await axios.post("http://localhost:3500/add", formData);
-      console.log(formData);
       console.log("Form submitted successfully.", response.data);
     } catch (error) {
       console.error("Form submission failed.", error);
