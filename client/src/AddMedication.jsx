@@ -6,7 +6,7 @@ const AddMedication = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
-  const [type, setType] = useState(null);
+  const [medType, setMedType] = useState(null);
   const [description, setDescription] = useState("");
   const [files, setFiles] = useState();
 
@@ -17,7 +17,7 @@ const AddMedication = () => {
     formData.append("name", name);
     formData.append("price", price);
     formData.append("quantity", quantity);
-    formData.append("type", type);
+    formData.append("medType", medType);
     formData.append("description", description);
     for (let i = 0; i < files.length; i++) {
       formData.append("files", files[i]);
@@ -88,7 +88,7 @@ const AddMedication = () => {
               Type of Medication
             </label>
             <select
-              onChange={(e) => setType(e.target.value)}
+              onChange={(e) => setMedType(e.target.value)}
               id="type"
               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             >

@@ -1,8 +1,8 @@
-import medication from "../models/medicationsSchema.js";
+import Medication from "../models/medicationsSchema.js";
 
 export const addMedication = (req, res) => {
   const { name, price, amount } = req.body;
-  const newMedication = new medication({
+  const newMedication = new Medication({
     name: name,
     price: price,
     amount: amount,
@@ -16,6 +16,13 @@ export const addMedication = (req, res) => {
       console.log(err);
     });
 };
-export const getMedication = (req, res) => {
-  res.send("what the fuck");
+export const getMedication = async (req, res) => {
+  try {
+    // Query the database and retrieve the data
+    const data = await Medication.find({}).exec();
+    res.json(data); // Send the retrieved data as a JSON response
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 };

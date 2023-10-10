@@ -14,16 +14,16 @@ const medicationSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  pictures: {
+  files: {
     type: [String],
   },
   description: {
     type: String,
   },
-  medicationType: {
+  medType: {
     type: String,
     enum: pharmacyItems,
   },
 });
-const medication = mongoose.model("medication", medicationSchema);
-export default medication;
+const Medication = mongoose.model("medication", medicationSchema);
+export default Medication;

@@ -5,7 +5,7 @@ import {
 } from "../controller/medicationController.js";
 
 const router = express.Router();
-router.get("/medication", getMedication);
+router.get("/all", getMedication);
 router.post("/medication", addMedication);
 
 export default router;
