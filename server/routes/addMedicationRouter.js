@@ -19,7 +19,7 @@ router.post("/add", upload.array("files"), (req, res) => {
   newMed
     .save()
     .then(() => {
-      res.status(200).send("Form data saved successfully");
+      res.status(200).send(newMed);
     })
     .catch((err) => {
       console.error(err);

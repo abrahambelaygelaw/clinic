@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import medicationRouter from "./routes/medicationRouter.js";
 import cors from "cors";
 import addMedicationRouter from "./routes/addMedicationRouter.js";
+import Auth from "./routes/Auth.js";
 const app = express();
 
 const url =
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use(cors());
 app.use(medicationRouter);
 app.use(addMedicationRouter);
+app.use(Auth);
 app.use((req, res, next) => {
   console.log("parsed", req.body);
   next();

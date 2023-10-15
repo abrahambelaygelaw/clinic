@@ -1,11 +1,11 @@
 export const pharmacyItems = [
-  "Prescription Medication",
-  "Over-the-Counter (OTC) Medication",
-  "Healthcare Product",
-  "Vitamins and Supplement",
-  "Personal Care and Hygiene Product",
-  "Baby Care Product",
+  "Prescription",
+  "Over-the-Counter",
+  "Healthcare",
+  "Vitamins & Supplement",
+  "Personal & Hygiene",
+  "Baby Care ",
   "Home Health Aid",
-  "Health and Wellness Product",
   "Medical Equipment and Supply",
+  "Uncatagorized",
 ];
