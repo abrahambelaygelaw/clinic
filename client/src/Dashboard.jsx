@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import useFetch from "../useFetch";
-import AddMedication from "./AddMedication";
+import { useState } from "react";
+import useFetch from "./useFetch";
 
 const Dashboard = () => {
   const [tableData, setTableData] = useState(false);
-  const { data } = useFetch("http://localhost:3500/all");
+  const { data } = useFetch("http://localhost:5000/all");
   if (data) {
     if (!tableData) {
       setTableData(data);
@@ -13,78 +12,78 @@ const Dashboard = () => {
   return (
     <div>
       {tableData && (
-        <section class="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
-          <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-            <div class="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-              <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                <div class="w-full md:w-1/2">
-                  <form class="flex items-center">
-                    <label for="simple-search" class="sr-only">
+        <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+          <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
+            <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
+              <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
+                <div className="w-full md:w-1/2">
+                  <form className="flex items-center">
+                    <label htmlFor="simple-search" className="sr-only">
                       Search
                     </label>
-                    <div class="relative w-full">
-                      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <div className="relative w-full">
+                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <svg
                           aria-hidden="true"
-                          class="w-5 h-5 text-gray-500 dark:text-gray-400"
+                          className="w-5 h-5 text-gray-500 dark:text-gray-400"
                           fill="currentColor"
-                          viewbox="0 0 20 20"
+                          viewBox="0 0 20 20"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
-                            clip-rule="evenodd"
+                            clipRule="evenodd"
                           />
                         </svg>
                       </div>
                       <input
                         type="text"
                         id="simple-search"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                         placeholder="Search"
                         required=""
                       />
                     </div>
                   </form>
                 </div>
-                <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
+                <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                   <button
                     type="button"
-                    class="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                    className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
                   >
                     <svg
-                      class="h-3.5 w-3.5 mr-2"
+                      className="h-3.5 w-3.5 mr-2"
                       fill="currentColor"
-                      viewbox="0 0 20 20"
+                      viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
                       aria-hidden="true"
                     >
                       <path
-                        clip-rule="evenodd"
-                        fill-rule="evenodd"
+                        clipRule="evenodd"
+                        fillRule="evenodd"
                         d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
                       />
                     </svg>
                     Add product
                   </button>
-                  <div class="flex items-center space-x-3 w-full md:w-auto">
+                  <div className="flex items-center space-x-3 w-full md:w-auto">
                     <button
                       id="actionsDropdownButton"
                       data-dropdown-toggle="actionsDropdown"
-                      class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       type="button"
                     >
                       <svg
-                        class="-ml-1 mr-1.5 w-5 h-5"
+                        className="-ml-1 mr-1.5 w-5 h-5"
                         fill="currentColor"
-                        viewbox="0 0 20 20"
+                        viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
                         aria-hidden="true"
                       >
                         <path
-                          clip-rule="evenodd"
-                          fill-rule="evenodd"
+                          clipRule="evenodd"
+                          fillRule="evenodd"
                           d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                         />
                       </svg>
@@ -92,25 +91,25 @@ const Dashboard = () => {
                     </button>
                     <div
                       id="actionsDropdown"
-                      class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                      className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                     >
                       <ul
-                        class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                        className="py-1 text-sm text-gray-700 dark:text-gray-200"
                         aria-labelledby="actionsDropdownButton"
                       >
                         <li>
                           <a
                             href="#"
-                            class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                            className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                           >
                             Mass Edit
                           </a>
                         </li>
                       </ul>
-                      <div class="py-1">
+                      <div className="py-1">
                         <a
                           href="#"
-                          class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                          className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                         >
                           Delete all
                         </a>
@@ -119,114 +118,114 @@ const Dashboard = () => {
                     <button
                       id="filterDropdownButton"
                       data-dropdown-toggle="filterDropdown"
-                      class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       type="button"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         aria-hidden="true"
-                        class="h-4 w-4 mr-2 text-gray-400"
-                        viewbox="0 0 20 20"
+                        className="h-4 w-4 mr-2 text-gray-400"
+                        viewBox="0 0 20 20"
                         fill="currentColor"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z"
-                          clip-rule="evenodd"
+                          clipRule="evenodd"
                         />
                       </svg>
                       Filter
                       <svg
-                        class="-mr-1 ml-1.5 w-5 h-5"
+                        className="-mr-1 ml-1.5 w-5 h-5"
                         fill="currentColor"
-                        viewbox="0 0 20 20"
+                        viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
                         aria-hidden="true"
                       >
                         <path
-                          clip-rule="evenodd"
-                          fill-rule="evenodd"
+                          clipRule="evenodd"
+                          fillRule="evenodd"
                           d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
                         />
                       </svg>
                     </button>
                     <div
                       id="filterDropdown"
-                      class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700"
+                      className="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700"
                     >
-                      <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">
+                      <h6 className="mb-3 text-sm font-medium text-gray-900 dark:text-white">
                         Choose brand
                       </h6>
                       <ul
-                        class="space-y-2 text-sm"
+                        className="space-y-2 text-sm"
                         aria-labelledby="filterDropdownButton"
                       >
-                        <li class="flex items-center">
+                        <li className="flex items-center">
                           <input
                             id="apple"
                             type="checkbox"
                             value=""
-                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                            className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                           />
                           <label
-                            for="apple"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
+                            htmlFor="apple"
+                            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                           >
                             Apple (56)
                           </label>
                         </li>
-                        <li class="flex items-center">
+                        <li className="flex items-center">
                           <input
                             id="fitbit"
                             type="checkbox"
                             value=""
-                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                            className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                           />
                           <label
-                            for="fitbit"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
+                            htmlFor="fitbit"
+                            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                           >
                             Microsoft (16)
                           </label>
                         </li>
-                        <li class="flex items-center">
+                        <li className="flex items-center">
                           <input
                             id="razor"
                             type="checkbox"
                             value=""
-                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                            className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                           />
                           <label
-                            for="razor"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
+                            htmlFor="razor"
+                            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                           >
                             Razor (49)
                           </label>
                         </li>
-                        <li class="flex items-center">
+                        <li className="flex items-center">
                           <input
                             id="nikon"
                             type="checkbox"
                             value=""
-                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                            className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                           />
                           <label
-                            for="nikon"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
+                            htmlFor="nikon"
+                            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                           >
                             Nikon (12)
                           </label>
                         </li>
-                        <li class="flex items-center">
+                        <li className="flex items-center">
                           <input
                             id="benq"
                             type="checkbox"
                             value=""
-                            class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
+                            className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500"
                           />
                           <label
-                            for="benq"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
+                            htmlFor="benq"
+                            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100"
                           >
                             BenQ (74)
                           </label>
@@ -236,54 +235,54 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
-              <div class="overflow-x-auto">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                  <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                      <th scope="col" class="px-4 py-3">
+                      <th scope="col" className="px-4 py-3">
                         Product name
                       </th>
-                      <th scope="col" class="px-4 py-3">
+                      <th scope="col" className="px-4 py-3">
                         Category
                       </th>
-                      <th scope="col" class="px-4 py-3">
+                      <th scope="col" className="px-4 py-3">
                         Brand
                       </th>
-                      <th scope="col" class="px-4 py-3">
+                      <th scope="col" className="px-4 py-3">
                         Description
                       </th>
-                      <th scope="col" class="px-4 py-3">
+                      <th scope="col" className="px-4 py-3">
                         Price
                       </th>
-                      <th scope="col" class="px-4 py-3">
-                        <span class="sr-only">Actions</span>
+                      <th scope="col" className="px-4 py-3">
+                        <span className="sr-only">Actions</span>
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="border-b dark:border-gray-700">
+                    <tr className="border-b dark:border-gray-700">
                       <th
                         scope="row"
-                        class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                        className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                       >
                         Apple iMac 27&#34;
                       </th>
-                      <td class="px-4 py-3">PC</td>
-                      <td class="px-4 py-3">Apple</td>
-                      <td class="px-4 py-3">300</td>
-                      <td class="px-4 py-3">$2999</td>
-                      <td class="px-4 py-3 flex items-center justify-end">
+                      <td className="px-4 py-3">PC</td>
+                      <td className="px-4 py-3">Apple</td>
+                      <td className="px-4 py-3">300</td>
+                      <td className="px-4 py-3">$2999</td>
+                      <td className="px-4 py-3 flex items-center justify-end">
                         <button
                           id="apple-imac-27-dropdown-button"
                           data-dropdown-toggle="apple-imac-27-dropdown"
-                          class="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
+                          className="inline-flex items-center p-0.5 text-sm font-medium text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
                           type="button"
                         >
                           <svg
-                            class="w-5 h-5"
+                            className="w-5 h-5"
                             aria-hidden="true"
                             fill="currentColor"
-                            viewbox="0 0 20 20"
+                            viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg"
                           >
                             <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
@@ -291,16 +290,16 @@ const Dashboard = () => {
                         </button>
                         <div
                           id="apple-imac-27-dropdown"
-                          class="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
+                          className="hidden z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600"
                         >
                           <ul
-                            class="py-1 text-sm text-gray-700 dark:text-gray-200"
+                            className="py-1 text-sm text-gray-700 dark:text-gray-200"
                             aria-labelledby="apple-imac-27-dropdown-button"
                           >
                             <li>
                               <a
                                 href="#"
-                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                               >
                                 Show
                               </a>
@@ -308,16 +307,16 @@ const Dashboard = () => {
                             <li>
                               <a
                                 href="#"
-                                class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
                               >
                                 Edit
                               </a>
                             </li>
                           </ul>
-                          <div class="py-1">
+                          <div className="py-1">
                             <a
                               href="#"
-                              class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                              className="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
                             >
                               Delete
                             </a>
@@ -329,37 +328,37 @@ const Dashboard = () => {
                 </table>
               </div>
               <nav
-                class="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
+                className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-3 md:space-y-0 p-4"
                 aria-label="Table navigation"
               >
-                <span class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                <span className="text-sm font-normal text-gray-500 dark:text-gray-400">
                   Showing
-                  <span class="font-semibold text-gray-900 dark:text-white">
+                  <span className="font-semibold text-gray-900 dark:text-white">
                     1-10
                   </span>
                   of
-                  <span class="font-semibold text-gray-900 dark:text-white">
+                  <span className="font-semibold text-gray-900 dark:text-white">
                     1000
                   </span>
                 </span>
-                <ul class="inline-flex items-stretch -space-x-px">
+                <ul className="inline-flex items-stretch -space-x-px">
                   <li>
                     <a
                       href="#"
-                      class="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      className="flex items-center justify-center h-full py-1.5 px-3 ml-0 text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >
-                      <span class="sr-only">Previous</span>
+                      <span className="sr-only">Previous</span>
                       <svg
-                        class="w-5 h-5"
+                        className="w-5 h-5"
                         aria-hidden="true"
                         fill="currentColor"
-                        viewbox="0 0 20 20"
+                        viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
-                          clip-rule="evenodd"
+                          clipRule="evenodd"
                         />
                       </svg>
                     </a>
@@ -367,7 +366,7 @@ const Dashboard = () => {
                   <li>
                     <a
                       href="#"
-                      class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >
                       1
                     </a>
@@ -375,7 +374,7 @@ const Dashboard = () => {
                   <li>
                     <a
                       href="#"
-                      class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >
                       2
                     </a>
@@ -384,7 +383,7 @@ const Dashboard = () => {
                     <a
                       href="#"
                       aria-current="page"
-                      class="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+                      className="flex items-center justify-center text-sm z-10 py-2 px-3 leading-tight text-primary-600 bg-primary-50 border border-primary-300 hover:bg-primary-100 hover:text-primary-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
                     >
                       3
                     </a>
@@ -392,7 +391,7 @@ const Dashboard = () => {
                   <li>
                     <a
                       href="#"
-                      class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >
                       ...
                     </a>
@@ -400,7 +399,7 @@ const Dashboard = () => {
                   <li>
                     <a
                       href="#"
-                      class="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      className="flex items-center justify-center text-sm py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >
                       100
                     </a>
@@ -408,20 +407,20 @@ const Dashboard = () => {
                   <li>
                     <a
                       href="#"
-                      class="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      className="flex items-center justify-center h-full py-1.5 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
                     >
-                      <span class="sr-only">Next</span>
+                      <span className="sr-only">Next</span>
                       <svg
-                        class="w-5 h-5"
+                        className="w-5 h-5"
                         aria-hidden="true"
                         fill="currentColor"
-                        viewbox="0 0 20 20"
+                        viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path
-                          fill-rule="evenodd"
+                          fillRule="evenodd"
                           d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-                          clip-rule="evenodd"
+                          clipRule="evenodd"
                         />
                       </svg>
                     </a>

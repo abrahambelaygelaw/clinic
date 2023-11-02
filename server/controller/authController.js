@@ -9,7 +9,6 @@ export const login = async (req, res) => {
   if (!username || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
-  console.log(req.body);
   try {
     const user = await User.findOne({ username });
     if (!user) {
@@ -36,15 +35,19 @@ export const login = async (req, res) => {
 
 export const refresh = async (req, res) => {
   const cookies = req.cookies;
-  if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" });
+  if (!cookies?.jwt) return res.status(401).json({ message: "No Cookies" });
   const refreshToken = cookies.jwt;
-  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, async (err, decoded) => {
-    if (err) return res.status(403).json({ message: "Forbidden" });
-    const foundUser = await User.findOne({ decoded });
-    if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
-    const accessToken = generateAccessToken(decoded);
-    res.json({ accessToken });
-  });
+  jwt.verify(
+    refreshToken,
+    process.env.REFRESH_TOKEN_SECRET,
+    async (err, decoded) => {
+      if (err) return res.status(403).json({ message: "Forbidden" });
+      const foundUser = await User.findOne({ _id: decoded.userId });
+      if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
+      const accessToken = generateAccessToken(decoded);
+      res.json({ accessToken });
+    }
+  );
 };
 
 export const logout = (req, res) => {

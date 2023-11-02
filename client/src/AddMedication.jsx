@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { pharmacyItems } from "./Constants";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -22,12 +22,12 @@ const AddMedication = ({ show, closeModal, added, list }) => {
     formData.append("quantity", quantity);
     formData.append("medType", medType);
     formData.append("description", description);
-    for (let i = 0; i < files.length; i++) {
+    for (let i = 0; i < files?.length; i++) {
       formData.append("files", files[i]);
     }
 
     try {
-      const response = await axios.post("http://localhost:3500/add", formData);
+      const response = await axios.post("http://localhost:5000/add", formData);
       console.log("Form submitted successfully.", response.data);
       addedSuccussfully();
       closeModal();
@@ -58,8 +58,8 @@ const AddMedication = ({ show, closeModal, added, list }) => {
         } fixed bg-black bg-opacity-60 z-10`}
       >
         <div className={` m-auto mt-6 p-3 max-w-2xl bg-white rounded-lg`}>
-          <div class="flex items-start justify-between p-4 mb-4 border-b rounded-t dark:border-gray-600">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          <div className="flex items-start justify-between p-4 mb-4 border-b rounded-t dark:border-gray-600">
+            <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
               Add Medication
             </h3>
             <button
@@ -71,7 +71,7 @@ const AddMedication = ({ show, closeModal, added, list }) => {
               data-modal-hide="defaultModal"
             >
               <svg
-                class="w-3 h-3"
+                className="w-3 h-3"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -79,13 +79,13 @@ const AddMedication = ({ show, closeModal, added, list }) => {
               >
                 <path
                   stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
                   d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                 />
               </svg>
-              <span class="sr-only">Close modal</span>
+              <span className="sr-only">Close modal</span>
             </button>
           </div>
           <form onSubmit={handleSubmit} encType="multipart/form-data">
