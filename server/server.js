@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import medicationRouter from "./routes/medicationRouter.js";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 import addMedicationRouter from "./routes/addMedicationRouter.js";
 import Auth from "./routes/Auth.js";
 const app = express();
@@ -11,6 +12,7 @@ const url =
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 app.use(medicationRouter);
 app.use(addMedicationRouter);
 app.use(Auth);
@@ -24,8 +26,8 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    app.listen(3500, () => {
-      console.log("listening on port 3500 ");
+    app.listen(5000, () => {
+      console.log("listening on port 5000 ");
     });
   })
   .catch((error) => {

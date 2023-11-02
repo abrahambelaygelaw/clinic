@@ -1,0 +1,72 @@
+import User from "../models/User.js";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+dotenv.config();
+
+export const login = async (req, res) => {
+  const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+  console.log(req.body);
+  try {
+    const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(401).json({ message: "User not found" });
+    }
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: "Invalid password" });
+    }
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      samiSite: "None",
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+    });
+    res.status(200).json({ accessToken });
+  } catch (error) {
+    console.error("Login error:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const refresh = async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" });
+  const refreshToken = cookies.jwt;
+  jwt.verify(refreshToken, REFRESH_TOKEN_SECRET, async (err, decoded) => {
+    if (err) return res.status(403).json({ message: "Forbidden" });
+    const foundUser = await User.findOne({ decoded });
+    if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
+    const accessToken = generateAccessToken(decoded);
+    res.json({ accessToken });
+  });
+};
+
+export const logout = (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.status(204);
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    samiSite: "None",
+    secure: true,
+  });
+  res.json({ message: "Cookie cleared" });
+};
+const generateAccessToken = (userId) => {
+  return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
+    expiresIn: "15m",
+  });
+};
+const generateRefreshToken = (userId) => {
+  return jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET);
+};
+
+export const getUsers = async (req, res) => {
+  const users = await User.find();
+  res.status(200).send(users);
+};
