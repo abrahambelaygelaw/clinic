@@ -18,8 +18,8 @@ export const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid password" });
     }
-    const accessToken = generateAccessToken(user._id);
-    const refreshToken = generateRefreshToken(user._id);
+    const accessToken = generateAccessToken(user);
+    const refreshToken = generateRefreshToken(user);
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
       secure: true,
@@ -42,10 +42,11 @@ export const refresh = async (req, res) => {
     process.env.REFRESH_TOKEN_SECRET,
     async (err, decoded) => {
       if (err) return res.status(403).json({ message: "Forbidden" });
-      const foundUser = await User.findOne({ _id: decoded.userId });
-      if (!foundUser) return res.status(401).json({ message: "Unauthorized" });
-      const accessToken = generateAccessToken(decoded);
-      res.json({ accessToken });
+      const foundUser = await User.findOne({ username: decoded.user });
+      if (!foundUser)
+        return res.status(401).json({ decoded, message: "Unauthorized" });
+      const accessToken = generateAccessToken(foundUser);
+      res.json({ decoded, accessToken });
     }
   );
 };
@@ -60,13 +61,24 @@ export const logout = (req, res) => {
   });
   res.json({ message: "Cookie cleared" });
 };
-const generateAccessToken = (userId) => {
-  return jwt.sign({ userId }, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "15m",
-  });
+const generateAccessToken = (user) => {
+  return jwt.sign(
+    {
+      UserInfo: {
+        username: user.username,
+        roles: user.roles,
+      },
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    {
+      expiresIn: "15m",
+    }
+  );
 };
-const generateRefreshToken = (userId) => {
-  return jwt.sign({ userId }, process.env.REFRESH_TOKEN_SECRET);
+const generateRefreshToken = (user) => {
+  return jwt.sign({ user: user.username }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: "14d",
+  });
 };
 
 export const getUsers = async (req, res) => {

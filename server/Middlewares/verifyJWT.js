@@ -8,11 +8,12 @@ export const authenticateToken = (req, res, next) => {
   }
   try {
     const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN);
-    const user = User.findById(decodedToken.userId);
-    if (!user) {
+    const user = User.findOne({ username: decodedToken.user });
+    if (!username) {
       return res.status(401).json({ error: "Invalid Token" });
     }
-    req.user = user;
+    req.username = user.username;
+    req.roles = user.roles;
     next();
   } catch (error) {
     return res.status(403).json({ error });

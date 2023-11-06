@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import Medication from "../models/medicationsSchema.js";
+import Medication from "../../models/medicationsSchema.js";
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     return cb(null, "./uploads");
