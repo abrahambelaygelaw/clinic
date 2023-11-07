@@ -1,8 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-import medicationRouter from "./routes/medicationRouter.js";
 import cors from "cors";
-import medication from "./routes/api/medications.js";
+import drug from "./routes/api/drug.js";
 import cookieParser from "cookie-parser";
 import Auth from "./routes/Auth.js";
 const app = express();
@@ -13,8 +12,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
-app.use(medicationRouter);
-app.use(medication);
+app.use(drug);
 app.use(Auth);
 
 mongoose

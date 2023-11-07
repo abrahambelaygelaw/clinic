@@ -1,19 +1,32 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
+// import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
+  // const history = useHistory();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = { username, password };
 
     try {
       const response = await axios.post(
-        "http://localhost:3500/login",
+        "http://localhost:5000/login",
         formData
       );
-      console.log(response);
+      // if (response.ok) {
+      //   const { token } = await response.json();
+
+      //   // Store the token in local storage or cookies
+      //   localStorage.setItem("token", token);
+
+      //   // Redirect to a different page
+      //   history.push("/test");
+      // } else {
+      //   const { message } = await response.json();
+      //   console.log(message);
+      // }
     } catch (error) {
       console.error("Login Failed", error);
     }

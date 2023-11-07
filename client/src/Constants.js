@@ -1,4 +1,4 @@
-export const pharmacyItems = [
+const pharmacyItems = [
   "Prescription",
   "Over-the-Counter",
   "Healthcare",
@@ -9,3 +9,6 @@ export const pharmacyItems = [
   "Medical Equipment and Supply",
   "Uncatagorized",
 ];
+const filteringFields = ["Name", "Stock No", "Item Code"];
+
+export { pharmacyItems, filteringFields };

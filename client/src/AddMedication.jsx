@@ -5,33 +5,37 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const AddMedication = ({ show, closeModal, added, list }) => {
-  const [name, setName] = useState("");
-  const [price, setPrice] = useState(null);
-  const [quantity, setQuantity] = useState(null);
-  const [medType, setMedType] = useState(null);
-  const [description, setDescription] = useState("");
-  const [files, setFiles] = useState();
+  const [name, setName] = useState();
+  const [strength, setStrength] = useState();
+  const [quantity, setQuantity] = useState();
+  const [itemCode, setItemCode] = useState();
+  const [location, setLocation] = useState();
+  const [stockCardNo, setStockCardNo] = useState();
+  const [min, setMin] = useState();
+  const [max, setMax] = useState();
+  const [DrugType, setDrugType] = useState();
   const addedSuccussfully = () => toast("Item added succesfully");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const formData = new FormData();
+    const formData = {};
 
-    formData.append("name", name);
-    formData.append("price", price);
-    formData.append("quantity", quantity);
-    formData.append("medType", medType);
-    formData.append("description", description);
-    for (let i = 0; i < files?.length; i++) {
-      formData.append("files", files[i]);
-    }
+    formData.name = name;
+    formData.quantity = quantity;
+    formData.DrugType = DrugType;
+    formData.itemCode = itemCode;
+    formData.max = max;
+    formData.min = min;
+    formData.location = location;
+    formData.strength = strength;
+    formData.stockCardNo = stockCardNo;
 
     try {
-      const response = await axios.post("http://localhost:5000/add", formData);
+      console.log(formData);
+      const response = await axios.post("http://localhost:5000/drug", formData);
       console.log("Form submitted successfully.", response.data);
       addedSuccussfully();
       closeModal();
-      added([...list, response.data]);
     } catch (error) {
       console.error("Form submission failed.", error);
     }
@@ -60,7 +64,7 @@ const AddMedication = ({ show, closeModal, added, list }) => {
         <div className={` m-auto mt-6 p-3 max-w-2xl bg-white rounded-lg`}>
           <div className="flex items-start justify-between p-4 mb-4 border-b rounded-t dark:border-gray-600">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Add Medication
+              Add Drug
             </h3>
             <button
               type="button"
@@ -95,7 +99,7 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   htmlFor="name"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Medication Name
+                  Drug Name
                 </label>
                 <input
                   onChange={(e) => setName(e.target.value)}
@@ -105,16 +109,32 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   required
                 />
               </div>
+              <div>
+                <label
+                  htmlFor="name"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Strength
+                </label>
+                <input
+                  onChange={(e) => setStrength(e.target.value)}
+                  type="text"
+                  id="name"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required
+                />
+              </div>
+
               <div className="flex gap-2 ">
                 <div className="flex-grow">
                   <label
                     htmlFor="price"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Price in ETB
+                    Item code
                   </label>
                   <input
-                    onChange={(e) => setPrice(e.target.value)}
+                    onChange={(e) => setItemCode(e.target.value)}
                     type="text"
                     id="price"
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -137,7 +157,70 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   />
                 </div>
               </div>
-
+              <div className="flex gap-2">
+                <div className="flex-grow">
+                  <label
+                    htmlFor="quantity"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Max
+                  </label>
+                  <input
+                    onChange={(e) => setMax(e.target.value)}
+                    type="number"
+                    id="company"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  />
+                </div>{" "}
+                <div className="flex-grow">
+                  <label
+                    htmlFor="quantity"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Min
+                  </label>
+                  <input
+                    onChange={(e) => setMin(e.target.value)}
+                    type="number"
+                    id="company"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="flex gap-2 ">
+                <div className="flex-grow">
+                  <label
+                    htmlFor="price"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Stock card Number
+                  </label>
+                  <input
+                    onChange={(e) => setStockCardNo(e.target.value)}
+                    type="text"
+                    id="price"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  />
+                </div>
+                <div className="flex-grow">
+                  <label
+                    htmlFor="quantity"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Location
+                  </label>
+                  <input
+                    onChange={(e) => setLocation(e.target.value)}
+                    type="text"
+                    id="company"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    required
+                  />
+                </div>
+              </div>
               <div>
                 <label
                   htmlFor="type"
@@ -146,7 +229,7 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   Type of Medication
                 </label>
                 <select
-                  onChange={(e) => setMedType(e.target.value)}
+                  onChange={(e) => setDrugType(e.target.value)}
                   id="type"
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
@@ -157,45 +240,6 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                     </option>
                   ))}
                 </select>
-              </div>
-              <div>
-                <label
-                  htmlFor="description"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Description
-                </label>
-                <textarea
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                  }}
-                  type="text"
-                  id="description"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  htmlFor="pictures"
-                >
-                  Add Pictures
-                </label>
-
-                <input
-                  onChange={(e) => setFiles(e.target.files)}
-                  className="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-                  id="pictures"
-                  type="file"
-                  multiple
-                />
-                <p
-                  className="mt-1 text-sm text-gray-500 dark:text-gray-300"
-                  id="file_input_help"
-                >
-                  SVG, PNG, JPG or GIF (MAX. 800x400px).
-                </p>
               </div>
             </div>
 
