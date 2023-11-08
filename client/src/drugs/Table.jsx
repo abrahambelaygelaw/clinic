@@ -3,31 +3,15 @@ import Utility from "./Utility";
 import { TbEdit } from "react-icons/tb";
 import { Link, useLocation } from "react-router-dom";
 import { MdOutlineDeleteOutline } from "react-icons/md";
-import queryString from "query-string";
-import useFetch from "../useFetch";
-const Table = () => {
-  const location = useLocation();
-  const [tableData, setTableData] = useState([]);
-  const [filter, setFilter] = useState({
-    name: "",
-    catagory: "",
-  });
 
-  const { data, error, loading } = useFetch(
-    `http://localhost:5000/drug${location.search}`
-  );
-  if (data && tableData.length == 0) {
-    setTableData(data);
-  }
-  const handleChange = (field, value) => {
-    setFilter({ ...filter, [field]: value });
-  };
+const Table = () => {
+  const [tableData, setTableData] = useState([]);
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
       <div className="mx-auto max-w-screen-2xl px-4 lg:px-12">
         <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
-          <Utility filtered={filter} handleFilter={handleChange} />
+          <Utility tableData={tableData} setTableData={setTableData} />
 
           <div className="overflow-x-auto">
             {tableData.length != 0 ? (

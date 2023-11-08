@@ -1,11 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { pharmacyItems, filteringFields } from "../Constants";
 import queryString from "query-string";
-import { useNavigate } from "react-router-dom";
-const Utility = ({ filtered, handleFilter }) => {
+import { useNavigate, useLocation } from "react-router-dom";
+import useDataFetching from "../useDataFetching";
+import { removeNullFields } from "../helper/removeNullFields";
+const Utility = ({ tableData, setTableData }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [filterDisplay, setFilterDisplay] = useState("Name");
+  const [searchType, setSearchType] = useState("Name");
+  const location = useLocation();
+  const [searchQuery, setSearchQuery] = useState();
+  const [filter, setFilter] = useState({
+    name: "",
+  });
+  const url = `http://localhost:5000/drug${location.search}`;
+  console.log(location.search);
+  const { data, error, loading } = useDataFetching(url);
+  useEffect(() => {
+    if (data) {
+      setTableData(data);
+    }
+  }, [data]);
+
+  const handleChange = (field, value) => {
+    setFilter({ ...filter, [field]: value });
+    console.log(filter);
+  };
   const navigate = useNavigate();
   const toggleDropDown = () => {
     setIsOpen(!isOpen);
@@ -14,12 +34,15 @@ const Utility = ({ filtered, handleFilter }) => {
     setIsFilterOpen(!isFilterOpen);
   };
   const selectField = (selected) => {
-    setFilterDisplay(selected);
+    setSearchType(selected);
     setIsFilterOpen(false);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    const query = queryString.stringify(filtered);
+
+    const query = queryString.stringify(filter, {
+      skipEmptyString: true,
+    });
     navigate(`?${query}`);
   };
   return (
@@ -32,7 +55,7 @@ const Utility = ({ filtered, handleFilter }) => {
             className=" text-gray-900 bg-gray-100 border border-gray-300 rounded-l-lg hover:bg-gray-200 focus:outline-none focus:ring-gray-100 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600 font-medium text-sm px-5 py-2.5 text-center inline-flex items-center whitespace-nowrap w-full"
             type="button"
           >
-            {filterDisplay}
+            {searchType}
             <svg
               className="w-2.5 h-2.5 ml-2.5"
               aria-hidden="true"
@@ -60,7 +83,7 @@ const Utility = ({ filtered, handleFilter }) => {
               className="py-2 text-sm text-gray-700 dark:text-gray-200"
               aria-labelledby="dropdownDefaultButton"
             >
-              {filteringFields.map((field) => (
+              {Object.keys(filteringFields).map((field) => (
                 <li key={field}>
                   <a
                     onClick={() => {
@@ -78,8 +101,8 @@ const Utility = ({ filtered, handleFilter }) => {
 
         <div className="relative w-full">
           <input
-            onClick={(e) => {
-              handleFilter("name", e.target.value);
+            onChange={(e) => {
+              handleChange(filteringFields[searchType], e.target.value);
             }}
             type="search"
             id="search"
