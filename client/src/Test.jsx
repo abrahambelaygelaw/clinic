@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import useFetch from "./useFetch";
 import AddMedication from "./AddMedication";
 
 import Delete from "./Delete";
@@ -15,7 +14,7 @@ const Test = () => {
   const [deleted, setDeleted] = useState();
 
   return (
-    <div>
+    <div className=" h-screen">
       <Delete show={showDelete} modal={setShowDelete} deleted={deleted} />
       <AddMedication show={showAdd} closeModal={setShowAdd} />
       <Navigation />

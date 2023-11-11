@@ -6,7 +6,6 @@ import {
   createRoutesFromElements,
 } from "react-router-dom";
 import Login from "./Login";
-import Dashboard from "./Dashboard";
 import AddMedication from "./AddMedication";
 import ShowMedications from "./ShowMedications";
 import Test from "./Test";
@@ -18,7 +17,6 @@ function App() {
       <>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/add" element={<AddMedication />} />
         <Route path="/show" element={<ShowMedications />} />
         <Route path="/test" element={<Test />} />

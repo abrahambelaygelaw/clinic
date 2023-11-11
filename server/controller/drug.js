@@ -16,18 +16,23 @@ export const addDrug = (req, res) => {
 
 export const getDrugs = async (req, res) => {
   const page = req.query.page || 1;
+  const name = req.query.name;
   const catagory = req.query.catagory;
-  const searchQuery = req.query.name;
   const sort = req.query.sort;
-  const regex = new RegExp(searchQuery, "i");
   const skip = (page - 1) * 2;
   const filter = {};
-  if (searchQuery) {
-    filter.name = regex;
-  }
-  if (catagory) {
-    filter.catagory = catagory;
-  }
+  const addToFilter = (query) => {
+    if (query) {
+      filter.query = query;
+    }
+  };
+  const makeRegex = (query) => {
+    if (query) {
+      const regex = new RegExp(query, "i");
+      filter.query = regex;
+    }
+  };
+  makeRegex(name);
   try {
     const data = await Drug.find(filter)
       .sort({

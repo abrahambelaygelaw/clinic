@@ -9,6 +9,10 @@ const pharmacyItems = [
   "Medical Equipment and Supply",
   "Uncatagorized",
 ];
-const filteringFields = ["Name", "Stock No", "Item Code"];
+const filteringFields = {
+  Name: "name",
+  "Stock No": "stockCardNo",
+  "Item Code": "itemCode",
+};
 
 export { pharmacyItems, filteringFields };
