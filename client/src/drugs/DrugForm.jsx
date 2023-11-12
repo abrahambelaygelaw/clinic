@@ -1,28 +1,40 @@
-import { useState } from "react";
-import { pharmacyItems } from "./Constants";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const AddMedication = ({ show, closeModal, added, list }) => {
-  const [name, setName] = useState();
-  const [strength, setStrength] = useState();
-  const [quantity, setQuantity] = useState();
-  const [itemCode, setItemCode] = useState();
-  const [location, setLocation] = useState();
-  const [stockCardNo, setStockCardNo] = useState();
-  const [min, setMin] = useState();
-  const [max, setMax] = useState();
-  const [DrugType, setDrugType] = useState();
+import { DrugContext } from "../Context";
+import { URL } from "../Constants";
+const AddDrug = () => {
+  const { itemToEdit, setItemToEdit, showDrugForm, setShowDrugForm } =
+    useContext(DrugContext);
+  const [name, setName] = useState("");
+  const [strength, setStrength] = useState("");
+  const [max, setMax] = useState("");
+  const [min, setMin] = useState("");
+  const [balance, setBalance] = useState("");
+  const [stockCardNo, setStockCardNo] = useState("");
+  const [location, setLocation] = useState("");
+  const [itemCode, setItemCode] = useState("");
   const addedSuccussfully = () => toast("Item added succesfully");
+  useEffect(() => {
+    if (itemToEdit) {
+      setName(itemToEdit.name);
+      setBalance(itemToEdit.balance);
+      setItemCode(itemToEdit.itemCode);
+      setStrength(itemToEdit.strength);
+      setLocation(itemToEdit.location);
+      setMax(itemToEdit.max);
+      setMin(itemToEdit.min);
+      setStockCardNo(itemToEdit.stockCardNo);
+    }
+  }, [itemToEdit]);
 
-  const handleSubmit = async (event) => {
+  const handleAdd = async (event) => {
     event.preventDefault();
     const formData = {};
 
     formData.name = name;
-    formData.quantity = quantity;
-    formData.DrugType = DrugType;
+    formData.balance = balance;
     formData.itemCode = itemCode;
     formData.max = max;
     formData.min = min;
@@ -31,14 +43,37 @@ const AddMedication = ({ show, closeModal, added, list }) => {
     formData.stockCardNo = stockCardNo;
 
     try {
-      console.log(formData);
-      const response = await axios.post("http://localhost:5000/drug", formData);
+      const response = await axios.post(`${URL}drug`, formData);
       console.log("Form submitted successfully.", response.data);
       addedSuccussfully();
-      closeModal();
+
+      window.location.reload();
     } catch (error) {
       console.error("Form submission failed.", error);
     }
+    setShowDrugForm(false);
+  };
+  const handleEdit = async (event) => {
+    event.preventDefault();
+    const formData = {};
+
+    formData.name = name;
+    formData.balance = balance;
+    formData.itemCode = itemCode;
+    formData.max = max;
+    formData.min = min;
+    formData.location = location;
+    formData.strength = strength;
+    formData.stockCardNo = stockCardNo;
+    try {
+      await axios.put(`${URL}drug/${itemToEdit._id}`, formData);
+      console.log("Record updated successfully");
+      window.location.reload();
+    } catch (error) {
+      console.error("Error updating record:", error);
+    }
+    setItemToEdit(null);
+    setShowDrugForm(false);
   };
   return (
     <>
@@ -57,19 +92,30 @@ const AddMedication = ({ show, closeModal, added, list }) => {
         />
       </div>
       <div
-        className={`w-full h-full inset-0 ${
-          show ? "" : "hidden"
-        } fixed bg-black bg-opacity-60 z-10`}
+        className={`w-full  inset-0 ${
+          showDrugForm ? "" : "hidden"
+        } fixed  bg-black bg-opacity-60 z-10`}
       >
-        <div className={` m-auto mt-6 p-3 max-w-2xl bg-white rounded-lg`}>
+        <div
+          className={`m-3 md:mx-auto mt-6 p-3 max-w-2xl bg-white rounded-lg`}
+        >
           <div className="flex items-start justify-between p-4 mb-4 border-b rounded-t dark:border-gray-600">
             <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-              Add Drug
+              {itemToEdit ? "Edit" : "Add"} Drug
             </h3>
             <button
               type="button"
               onClick={() => {
-                closeModal(false);
+                setShowDrugForm(false);
+                setItemToEdit(null);
+                setName("");
+                setBalance("");
+                setItemCode("");
+                setStrength("");
+                setLocation("");
+                setMax("");
+                setMin("");
+                setStockCardNo("");
               }}
               className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
               data-modal-hide="defaultModal"
@@ -92,7 +138,7 @@ const AddMedication = ({ show, closeModal, added, list }) => {
               <span className="sr-only">Close modal</span>
             </button>
           </div>
-          <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <form>
             <div className="grid gap-6 ">
               <div>
                 <label
@@ -105,13 +151,14 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   onChange={(e) => setName(e.target.value)}
                   type="text"
                   id="name"
+                  value={name}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
               </div>
               <div>
                 <label
-                  htmlFor="name"
+                  htmlFor="strength"
                   className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Strength
@@ -119,7 +166,8 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                 <input
                   onChange={(e) => setStrength(e.target.value)}
                   type="text"
-                  id="name"
+                  id="strength"
+                  value={strength}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required
                 />
@@ -128,7 +176,7 @@ const AddMedication = ({ show, closeModal, added, list }) => {
               <div className="flex gap-2 ">
                 <div className="flex-grow">
                   <label
-                    htmlFor="price"
+                    htmlFor="itemCode"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Item code
@@ -136,22 +184,24 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   <input
                     onChange={(e) => setItemCode(e.target.value)}
                     type="text"
-                    id="price"
+                    id="itemCode"
+                    value={itemCode}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
                 </div>
                 <div className="flex-grow">
                   <label
-                    htmlFor="quantity"
+                    htmlFor="balance"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Quantity
+                    Balance
                   </label>
                   <input
-                    onChange={(e) => setQuantity(e.target.value)}
+                    onChange={(e) => setBalance(e.target.value)}
                     type="number"
-                    id="company"
+                    id="balance"
+                    value={balance}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
@@ -160,7 +210,7 @@ const AddMedication = ({ show, closeModal, added, list }) => {
               <div className="flex gap-2">
                 <div className="flex-grow">
                   <label
-                    htmlFor="quantity"
+                    htmlFor="max"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Max
@@ -168,14 +218,15 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   <input
                     onChange={(e) => setMax(e.target.value)}
                     type="number"
-                    id="company"
+                    id="max"
+                    value={max}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
                 </div>{" "}
                 <div className="flex-grow">
                   <label
-                    htmlFor="quantity"
+                    htmlFor="min"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Min
@@ -183,7 +234,8 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   <input
                     onChange={(e) => setMin(e.target.value)}
                     type="number"
-                    id="company"
+                    id="min"
+                    value={min}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
@@ -192,7 +244,7 @@ const AddMedication = ({ show, closeModal, added, list }) => {
               <div className="flex gap-2 ">
                 <div className="flex-grow">
                   <label
-                    htmlFor="price"
+                    htmlFor="stockCardNo"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Stock card Number
@@ -200,14 +252,15 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   <input
                     onChange={(e) => setStockCardNo(e.target.value)}
                     type="text"
-                    id="price"
+                    id="stockCardNo"
+                    value={stockCardNo}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
                 </div>
                 <div className="flex-grow">
                   <label
-                    htmlFor="quantity"
+                    htmlFor="location"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Location
@@ -215,40 +268,31 @@ const AddMedication = ({ show, closeModal, added, list }) => {
                   <input
                     onChange={(e) => setLocation(e.target.value)}
                     type="text"
-                    id="company"
+                    id="location"
+                    value={location}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />
                 </div>
               </div>
-              <div>
-                <label
-                  htmlFor="type"
-                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                >
-                  Type of Medication
-                </label>
-                <select
-                  onChange={(e) => setDrugType(e.target.value)}
-                  id="type"
-                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                >
-                  <option defaultValue="Uncatagorized">Choose a type</option>
-                  {pharmacyItems.map((item, index) => (
-                    <option key={index} value={item}>
-                      {item}
-                    </option>
-                  ))}
-                </select>
-              </div>
             </div>
-
-            <button
-              type="submit"
-              className="mt-6 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
-            >
-              Add
-            </button>
+            {itemToEdit ? (
+              <button
+                onClick={handleEdit}
+                type="submit"
+                className="mt-6 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+              >
+                Submit
+              </button>
+            ) : (
+              <button
+                onClick={handleAdd}
+                type="submit"
+                className="mt-6 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+              >
+                Add
+              </button>
+            )}
           </form>
         </div>
       </div>
@@ -256,4 +300,4 @@ const AddMedication = ({ show, closeModal, added, list }) => {
   );
 };
 
-export default AddMedication;
+export default AddDrug;

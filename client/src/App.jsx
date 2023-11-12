@@ -1,26 +1,22 @@
-import HomePage from "./HomePage";
 import {
   Route,
   RouterProvider,
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Login from "./Login";
-import AddMedication from "./AddMedication";
-import ShowMedications from "./ShowMedications";
-import Test from "./Test";
-import Delete from "./Delete";
+import Login from "./user/Login";
+import Drug from "./drugs/Drug";
+import DrugTransaction from "./transaction/DrugTransaction";
+import Navigation from "./Navigation";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/add" element={<AddMedication />} />
-        <Route path="/show" element={<ShowMedications />} />
-        <Route path="/test" element={<Test />} />
-        <Route path="/delete" element={<Delete />} />
+        <Route path="/drug" element={<Drug />} />
+        <Route path="/drug/:id" element={<DrugTransaction />} />
       </>
     )
   );

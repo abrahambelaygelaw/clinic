@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { pharmacyItems } from "../Constants.js";
 
 const DrugSchema = new mongoose.Schema({
   name: {
@@ -14,17 +13,13 @@ const DrugSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  quantity: {
+  balance: {
     type: Number,
     required: true,
   },
   stockCardNo: {
     type: String,
     required: true,
-  },
-  DrugType: {
-    type: String,
-    enum: pharmacyItems,
   },
   strength: {
     type: String,
@@ -37,7 +32,11 @@ const DrugSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdAt: { type: Date, default: Date.now },
+  timestamp: { type: Date, default: Date.now },
+});
+DrugSchema.pre("save", function (next) {
+  this.timestamp = new Date();
+  next();
 });
 const Drug = mongoose.model("drug", DrugSchema);
 export default Drug;

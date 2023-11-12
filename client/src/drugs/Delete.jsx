@@ -1,23 +1,64 @@
-import React from "react";
+import React, { useContext, useEffect } from "react";
+import { DrugContext } from "../Context";
+import axios from "axios";
+import { URL } from "../Constants";
+import { ToastContainer, toast } from "react-toastify";
+const Delete = () => {
+  const { itemToDelte, setItemToDelete } = useContext(DrugContext);
+  // const showToast = (message, options) => {
+  //   // Store toast information in local storage
+  //   const storedToasts = JSON.parse(localStorage.getItem("toasts")) || [];
+  //   localStorage.setItem(
+  //     "toasts",
+  //     JSON.stringify([...storedToasts, { message, options }])
+  //   );
+  //   toast(message, options);
+  //   localStorage.removeItem("toasts");
+  // };
+  // const showStoredToasts = () => {
+  //   const storedToasts = JSON.parse(localStorage.getItem("toasts")) || [];
 
-const Delete = ({ show, modal, list, deleted }) => {
-  const handleDelete = () => {};
+  //   storedToasts.forEach(({ message, options }) => {
+  //     toast(message, options);
+  //   });
+
+  //   // Clear stored toasts after displaying
+  // };
+
+  // useEffect(() => {
+  //   showStoredToasts();
+  // }, []);
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`${URL}drug/${itemToDelte._id}`);
+      // showToast("Item deleted successfully", { autoClose: 1000 });
+      window.location.reload();
+    } catch (error) {
+      console.error(error);
+      // showToast("Deletion failed", { autoClose: 3000 });
+    }
+    setItemToDelete(null);
+  };
+
   return (
     <div
       id="info-popup"
       tabIndex="-1"
       className={`w-full h-full inset-0 ${
-        show ? "" : "hidden"
+        itemToDelte ? "" : "hidden"
       } fixed bg-black bg-opacity-60 z-20 flex`}
     >
-      {deleted && (
+      <ToastContainer />
+      {itemToDelte && (
         <div className={` m-auto  max-w-lg `}>
           <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 md:p-8">
             <div className="mb-4 text-sm font-light text-gray-500 dark:text-gray-400">
               <h3 className="mb-3 text-2xl font-bold text-gray-900 dark:text-white">
                 Are you sure?
               </h3>
-              <h2 className="text-lg font-bold">Item Name{deleted.name}</h2>
+              <h2 className="text-lg font-bold">
+                Item Name {itemToDelte.name}
+              </h2>
               <p>
                 Are you sure you want to delete this item? This action cannot be
                 undone. Deleting the item will permanently remove it from your
@@ -29,7 +70,7 @@ const Delete = ({ show, modal, list, deleted }) => {
               <div className="items-center space-y-4 sm:space-x-4 sm:flex sm:space-y-0">
                 <button
                   onClick={() => {
-                    modal(false);
+                    setItemToDelete(null);
                   }}
                   id="close-modal"
                   type="button"
