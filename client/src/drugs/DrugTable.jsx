@@ -40,14 +40,14 @@ const DrugTable = ({ tableData }) => {
           {tableData.map((item) => (
             <tr
               key={item._id}
-              className="border-b dark:border-gray-700 hover:bg-gray-100 cursor-pointer"
-              onClick={() => {
-                navigate(item._id);
-              }}
+              className="border-b dark:border-gray-700 hover:bg-gray-100 "
             >
               <th
                 scope="row"
-                className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                onClick={() => {
+                  navigate(item._id);
+                }}
+                className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white cursor-pointer"
               >
                 {item.name}
               </th>

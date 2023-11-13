@@ -1,7 +1,7 @@
 import User from "../models/User.js";
 import bcrypt from "bcrypt";
 
-export const register = async (req, res) => {
+export const addUser = async (req, res) => {
   const { username, password, roles } = req.body;
   try {
     const existingUser = await User.findOne({ username });

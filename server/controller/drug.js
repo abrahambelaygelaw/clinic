@@ -40,41 +40,14 @@ const getDrugs = async (req, res) => {
     filter.name = regex;
   }
   try {
+    const count = await Drug.countDocuments(filter);
     const data = await Drug.find(filter)
       .sort({
         [sort]: order === "asc" ? 1 : -1,
       })
       .skip(skip)
       .limit(perpage);
-    res.json(data);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: "Internal server error" });
-  }
-};
-
-const countDrugs = async (req, res) => {
-  let filter = {};
-  const type = req.query.type;
-  if (type) {
-    if (type === "under") {
-      filter = {
-        $expr: { $gte: ["$min", "$balance"] },
-      };
-    } else if (type === "over") {
-      filter = {
-        $expr: { $gte: ["$balance", "$max"] },
-      };
-    }
-  }
-  const name = req.query.name;
-  if (name) {
-    const regex = new RegExp(name, "i");
-    filter.name = regex;
-  }
-  try {
-    const data = await Drug.countDocuments(filter);
-    res.json(data);
+    res.json({ data, count });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -111,4 +84,4 @@ const editDrug = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-export { countDrugs, addDrug, deleteDrug, getDrugs, editDrug };
+export { addDrug, deleteDrug, getDrugs, editDrug };

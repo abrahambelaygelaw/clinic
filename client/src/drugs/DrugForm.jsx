@@ -11,7 +11,6 @@ const AddDrug = () => {
   const [strength, setStrength] = useState("");
   const [max, setMax] = useState("");
   const [min, setMin] = useState("");
-  const [balance, setBalance] = useState("");
   const [stockCardNo, setStockCardNo] = useState("");
   const [location, setLocation] = useState("");
   const [itemCode, setItemCode] = useState("");
@@ -19,7 +18,6 @@ const AddDrug = () => {
   useEffect(() => {
     if (itemToEdit) {
       setName(itemToEdit.name);
-      setBalance(itemToEdit.balance);
       setItemCode(itemToEdit.itemCode);
       setStrength(itemToEdit.strength);
       setLocation(itemToEdit.location);
@@ -34,7 +32,6 @@ const AddDrug = () => {
     const formData = {};
 
     formData.name = name;
-    formData.balance = balance;
     formData.itemCode = itemCode;
     formData.max = max;
     formData.min = min;
@@ -58,7 +55,6 @@ const AddDrug = () => {
     const formData = {};
 
     formData.name = name;
-    formData.balance = balance;
     formData.itemCode = itemCode;
     formData.max = max;
     formData.min = min;
@@ -109,7 +105,6 @@ const AddDrug = () => {
                 setShowDrugForm(false);
                 setItemToEdit(null);
                 setName("");
-                setBalance("");
                 setItemCode("");
                 setStrength("");
                 setLocation("");
@@ -186,22 +181,6 @@ const AddDrug = () => {
                     type="text"
                     id="itemCode"
                     value={itemCode}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required
-                  />
-                </div>
-                <div className="flex-grow">
-                  <label
-                    htmlFor="balance"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Balance
-                  </label>
-                  <input
-                    onChange={(e) => setBalance(e.target.value)}
-                    type="number"
-                    id="balance"
-                    value={balance}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     required
                   />

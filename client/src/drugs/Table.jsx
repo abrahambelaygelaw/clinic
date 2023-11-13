@@ -1,43 +1,48 @@
 import { useState, useEffect, useContext } from "react";
 import queryString from "query-string";
 import { useNavigate, useLocation } from "react-router-dom";
-import useDataFetching from "../useDataFetching";
+import useDataFetching from "../hooks/useDataFetching";
 import Pagination from "../Components/Pagination";
 import DrugTable from "./DrugTable";
 import { URL } from "../Constants";
-import UseGetCount from "../UseGetCount";
 import { makeQueryString } from "../helper/makeQueryString";
 import { TfiReload } from "react-icons/tfi";
 import { DrugContext } from "../Context";
+import useDebounce from "../hooks/useDebounce";
 const Table = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [tableData, setTableData] = useState([]);
-  const [total, setTotal] = useState();
   const [perPage, setPerPage] = useState(15);
   const parsed = queryString.parse(location.search);
   const currentPage = parsed.page || 1;
   const [filter, setFilter] = useState(parsed);
-  const { showDrugForm, setShowDrugForm } = useContext(DrugContext);
-  const { count } = UseGetCount(`${URL}drug/count${location.search}`);
+  const [searchTerm, setSearchTerm] = useState(parsed.name ? parsed.name : "");
+  const [count, setCount] = useState();
+  const { setShowDrugForm } = useContext(DrugContext);
   const { data, error, loading } = useDataFetching(
     `${URL}drug${location.search}`
   );
+  const debouncedInput = useDebounce(searchTerm, 500);
   useEffect(() => {
     if (data) {
-      setTableData(data);
+      setTableData(data.data);
+      setCount(data.count);
     }
-    if (count) {
-      setTotal(count);
-    }
-  }, [data, count]);
-
+  }, [data]);
   const handleChange = (field, value) => {
     setFilter({ ...filter, [field]: value });
-    const query = makeQueryString({ ...filter, [field]: value, ["page"]: 1 });
+    const query = makeQueryString({
+      ...filter,
+      [field]: value,
+      ["page"]: 1,
+    });
 
     navigate(`?${query}`);
   };
+  useEffect(() => {
+    handleChange("name", searchTerm);
+  }, [debouncedInput]);
 
   return (
     <div className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
@@ -70,11 +75,11 @@ const Table = () => {
               <div className="relative w-full flex gap-2">
                 <input
                   onChange={(e) => {
-                    handleChange("name", e.target.value);
+                    setSearchTerm(e.target.value);
                   }}
                   type="search"
                   id="search"
-                  value={filter.name}
+                  value={searchTerm}
                   className="block p-2.5 w-full  text-sm text-gray-900 bg-gray-50 rounded-lg  border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-l-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
                   placeholder="Search Drugs..."
                   required
@@ -140,7 +145,7 @@ const Table = () => {
                 <DrugTable tableData={tableData} />
                 <Pagination
                   page={currentPage}
-                  total={total}
+                  total={count}
                   perPage={perPage}
                 />
               </>
