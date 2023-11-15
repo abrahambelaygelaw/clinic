@@ -15,6 +15,9 @@ const DrugTable = ({ tableData }) => {
           <tr>
             <th scope="col" className="px-4 py-3">
               name
+            </th>{" "}
+            <th scope="col" className="px-4 py-3">
+              Strength
             </th>
             <th scope="col" className="px-4 py-3">
               Location
@@ -51,6 +54,7 @@ const DrugTable = ({ tableData }) => {
               >
                 {item.name}
               </th>
+              <td className="px-4 py-3">{item.strength}</td>
               <td className="px-4 py-3">{item.location}</td>
               <td className="px-4 py-3">{item.itemCode}</td>
               <td className="px-4 py-3">{item.balance}</td>
@@ -58,7 +62,7 @@ const DrugTable = ({ tableData }) => {
               <td className="px-4 py-3">{item.max}</td>
 
               <td className="px-4 py-3 flex items-center justify-start">
-                <ul className="py-1 text-sm text-gray-700 dark:text-gray-200 flex justify-between">
+                <ul className=" text-sm text-gray-700 dark:text-gray-200 flex justify-between">
                   <li>
                     <button
                       onClick={() => {

@@ -4,8 +4,13 @@ import Transaction from "../models/Transaction.js";
 export const addTransaction = async (req, res) => {
   try {
     const formData = req.body;
+    console.log(formData);
     const drug = await Drug.findById(formData.drug);
-    formData.balance = drug.balance + formData.in - formData.out;
+    const newBalance =
+      parseFloat(drug.balance) +
+      parseFloat(formData.in) -
+      parseFloat(formData.out);
+    formData.balance = newBalance;
     const newTransaction = new Transaction(formData);
     await newTransaction.save();
     await Drug.updateOne(
@@ -21,8 +26,9 @@ export const addTransaction = async (req, res) => {
 
 export const getAllTransactions = async (req, res) => {
   try {
+    const count = await Transaction.countDocuments();
     const data = await Transaction.find();
-    res.json(data);
+    res.json({ data, count });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });
@@ -31,8 +37,11 @@ export const getAllTransactions = async (req, res) => {
 
 export const getTransactions = async (req, res) => {
   try {
-    const data = await Transaction.find({ drug: req.params.id });
-    res.json(data);
+    const count = await Transaction.countDocuments({ drug: req.params.id });
+    const data = await Transaction.find({ drug: req.params.id }).sort({
+      ["date"]: -1,
+    });
+    res.json({ data, count });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });

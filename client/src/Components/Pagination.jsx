@@ -43,7 +43,7 @@ const Pagination = ({ total, page, perPage }) => {
               {total}
             </span>{" "}
           </span>
-          Results
+          {total === 1 ? "Result" : "Results"}
         </span>
         <div className="inline-flex mt-2 xs:mt-0">
           <button

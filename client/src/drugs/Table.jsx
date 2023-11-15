@@ -12,18 +12,18 @@ import useDebounce from "../hooks/useDebounce";
 const Table = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const parsed = queryString.parse(location.search);
+  const [filter, setFilter] = useState(parsed);
   const [tableData, setTableData] = useState([]);
   const [perPage, setPerPage] = useState(15);
-  const parsed = queryString.parse(location.search);
   const currentPage = parsed.page || 1;
-  const [filter, setFilter] = useState(parsed);
   const [searchTerm, setSearchTerm] = useState(parsed.name ? parsed.name : "");
   const [count, setCount] = useState();
   const { setShowDrugForm } = useContext(DrugContext);
   const { data, error, loading } = useDataFetching(
     `${URL}drug${location.search}`
   );
-  const debouncedInput = useDebounce(searchTerm, 500);
+  const debouncedInput = useDebounce(searchTerm, 300);
   useEffect(() => {
     if (data) {
       setTableData(data.data);

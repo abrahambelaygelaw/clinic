@@ -1,6 +1,6 @@
 import { createContext } from "react";
 
 const DrugContext = createContext();
-const HistoryContext = createContext();
+const TransactionContext = createContext();
 
-export { DrugContext, HistoryContext };
+export { DrugContext, TransactionContext };

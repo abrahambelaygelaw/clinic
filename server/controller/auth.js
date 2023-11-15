@@ -52,26 +52,30 @@ export const refresh = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  const cookies = req.cookies;
-  if (!cookies?.jwt) return res.status(204);
-  res.clearCookie("jwt", {
-    httpOnly: true,
-    samiSite: "None",
-    secure: true,
-  });
-  res.json({ message: "Cookie cleared" });
+  try {
+    const cookies = req.cookies;
+    if (!cookies?.jwt) return res.status(204);
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      samiSite: "None",
+      secure: true,
+    });
+    res.json({ message: "Cookie cleared" });
+  } catch (error) {
+    res.json(error);
+  }
 };
 const generateAccessToken = (user) => {
   return jwt.sign(
     {
-      UserInfo: {
+      userInfo: {
         username: user.username,
         roles: user.roles,
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "15m",
+      expiresIn: "1000",
     }
   );
 };

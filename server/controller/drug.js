@@ -13,8 +13,17 @@ const addDrug = (req, res) => {
       res.status(500).json("Error saving form data");
     });
 };
-
+const getDrug = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const response = await Drug.findById(id);
+    res.send(response);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 const getDrugs = async (req, res) => {
+  console.log(req.user);
   let filter = {};
   const name = req.query.name;
   const page = req.query.page || 1;
@@ -68,7 +77,7 @@ const deleteDrug = async (req, res) => {
   }
 };
 
-const editDrug = async (req, res) => {
+const updateDrug = async (req, res) => {
   const { id } = req.params;
   try {
     const drug = await Drug.findById(id);
@@ -84,4 +93,4 @@ const editDrug = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
-export { addDrug, deleteDrug, getDrugs, editDrug };
+export { addDrug, deleteDrug, getDrug, getDrugs, updateDrug };

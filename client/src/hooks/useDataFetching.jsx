@@ -4,9 +4,14 @@ const useDataFetching = (url) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const accessToken = localStorage.getItem("accessToken");
   const fetchData = async () => {
     try {
-      const response = await axios.get(url);
+      const response = await axios.get(url, {
+        headers: {
+          Authorization: "Bearer " + accessToken,
+        },
+      });
       setData(response.data);
       console.log(response.data);
     } catch (err) {

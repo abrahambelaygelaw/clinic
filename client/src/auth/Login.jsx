@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useState } from "react";
-// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  // const history = useHistory();
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = { username, password };
@@ -15,18 +15,13 @@ const Login = () => {
         "http://localhost:5000/login",
         formData
       );
-      // if (response.ok) {
-      //   const { token } = await response.json();
+      console.log(response);
+      const { accessToken } = response.data;
+      if (response.status === 200) {
+        localStorage.setItem("accessToken", accessToken);
 
-      //   // Store the token in local storage or cookies
-      //   localStorage.setItem("token", token);
-
-      //   // Redirect to a different page
-      //   history.push("/test");
-      // } else {
-      //   const { message } = await response.json();
-      //   console.log(message);
-      // }
+        navigate("/drug");
+      }
     } catch (error) {
       console.error("Login Failed", error);
     }
@@ -39,11 +34,7 @@ const Login = () => {
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
               Sign in to your account
             </h1>
-            <form
-              className="space-y-4 md:space-y-6"
-              action="#"
-              onSubmit={handleSubmit}
-            >
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="username"
