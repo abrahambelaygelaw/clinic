@@ -7,13 +7,16 @@ const Navigation = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      const response = await axios.get(`${URL}logout`);
-      console.log(response);
-      navigate("/login");
-    } catch (error) {
-      console.log(error);
-    }
+      const response = await axios.post(
+        `${URL}logout`,
+        {},
+        { withCredentials: true }
+      );
+    } catch (err) {}
+    localStorage.removeItem("accessToken");
+    navigate("/login");
   };
+
   return (
     <nav className=" bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-wrap justify-between items-center p-4">

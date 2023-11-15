@@ -48,7 +48,7 @@ const DrugTable = ({ tableData }) => {
               <th
                 scope="row"
                 onClick={() => {
-                  navigate(item._id);
+                  navigate(`/transaction/${item._id}`);
                 }}
                 className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white cursor-pointer"
               >
@@ -60,7 +60,6 @@ const DrugTable = ({ tableData }) => {
               <td className="px-4 py-3">{item.balance}</td>
               <td className="px-4 py-3">{item.min}</td>
               <td className="px-4 py-3">{item.max}</td>
-
               <td className="px-4 py-3 flex items-center justify-start">
                 <ul className=" text-sm text-gray-700 dark:text-gray-200 flex justify-between">
                   <li>

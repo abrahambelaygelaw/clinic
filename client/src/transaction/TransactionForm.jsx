@@ -3,6 +3,7 @@ import axios from "axios";
 import { TransactionContext } from "../Context";
 import DrugData from "./DrugData";
 import { URL } from "../Constants";
+import { useNavigate } from "react-router-dom";
 const TransactionForm = () => {
   const { showTransactionForm, setShowTransactionForm, drugData } =
     useContext(TransactionContext);
@@ -13,6 +14,7 @@ const TransactionForm = () => {
   const [expDate, setExpDate] = useState(new Date());
   const [batchNo, setBatchNo] = useState("");
   const [remark, setRemark] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     setShowTransactionForm(false);
@@ -36,6 +38,7 @@ const TransactionForm = () => {
       console.error("Error submitting form:", error);
       // Handle errors (e.g., show an error message)
     }
+    navigate(`/transaction/${drugData._id}`);
   };
 
   return (

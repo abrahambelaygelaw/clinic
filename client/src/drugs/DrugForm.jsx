@@ -40,11 +40,10 @@ const AddDrug = () => {
     formData.stockCardNo = stockCardNo;
 
     try {
-      const response = await axios.post(`${URL}drug`, formData);
+      const response = await axios.post(`${URL}drug`, formData, {});
       console.log("Form submitted successfully.", response.data);
-      addedSuccussfully();
-
       window.location.reload();
+      addedSuccussfully();
     } catch (error) {
       console.error("Form submission failed.", error);
     }
@@ -64,7 +63,7 @@ const AddDrug = () => {
     try {
       await axios.put(`${URL}drug/${itemToEdit._id}`, formData);
       console.log("Record updated successfully");
-      window.location.reload();
+      navigate("/drug");
     } catch (error) {
       console.error("Error updating record:", error);
     }

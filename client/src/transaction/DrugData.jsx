@@ -21,7 +21,7 @@ const DrugData = () => {
       {drugData && (
         <div
           onClick={handleTouch}
-          className={`border shadow bg-white  px-5 py-2  mb-3 rounded-lg overflow-hidden ${
+          className={`border shadow bg-white cursor-pointer  px-5 py-2  mb-3 rounded-lg overflow-hidden ${
             isExpanded ? "h-auto" : "h-14"
           }`}
         >

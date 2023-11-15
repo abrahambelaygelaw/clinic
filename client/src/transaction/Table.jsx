@@ -57,20 +57,15 @@ const Table = () => {
               </svg>
               Transaction
             </button>
-            {/* <select
-              name=""
-              id=""
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            >
-              <option defaultValue={filter.type}>All</option>
-              <option value="under">Under Min</option>
-              <option value="over">Over Max</option>
-            </select> */}
           </div>
-          {transactionData.length != 0 && (
+          {transactionData.length != 0 ? (
             <div className="overflow-x-auto">
               <TransactionTable transactionData={transactionData} />
               <Pagination page={currentPage} total={count} perPage={perPage} />
+            </div>
+          ) : (
+            <div className="flex w-full">
+              <h3 className=" my-10 mx-auto">No Results found</h3>
             </div>
           )}
         </div>

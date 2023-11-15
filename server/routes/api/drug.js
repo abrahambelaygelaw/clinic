@@ -8,10 +8,10 @@ import {
 } from "../../controller/drug.js";
 import { authenticateToken } from "../../Middlewares/verifyJWT.js";
 const router = express.Router();
-router.post("/drug", authenticateToken, addDrug);
-router.get("/drug", authenticateToken, getDrugs);
-router.get("/drug/:id", authenticateToken, getDrug);
-router.delete("/drug/:id", authenticateToken, deleteDrug);
-router.put("/drug/:id", authenticateToken, updateDrug);
+router.post("/drug", addDrug);
+router.get("/drug", getDrugs);
+router.get("/drug/:id", getDrug);
+router.delete("/drug/:id", deleteDrug);
+router.put("/drug/:id", updateDrug);
 
 export default router;

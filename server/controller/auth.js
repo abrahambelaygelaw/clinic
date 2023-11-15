@@ -22,8 +22,9 @@ export const login = async (req, res) => {
     const refreshToken = generateRefreshToken(user);
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
-      secure: true,
-      samiSite: "None",
+      // secure: false,
+      // sameSite: "None",
+      // credentials: true,
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
     res.status(200).json({ accessToken });
@@ -52,19 +53,22 @@ export const refresh = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  try {
-    const cookies = req.cookies;
-    if (!cookies?.jwt) return res.status(204);
-    res.clearCookie("jwt", {
-      httpOnly: true,
-      samiSite: "None",
-      secure: true,
-    });
-    res.json({ message: "Cookie cleared" });
-  } catch (error) {
-    res.json(error);
+  const cookies = req.cookies;
+  console.log(cookies);
+  if (!cookies?.jwt) {
+    return res.status(401).json({ message: "User is not logged in" });
   }
+  console.log("Logout request received");
+
+  res.clearCookie("jwt", {
+    httpOnly: true,
+    // secure: false, // Set to true if your server is using HTTPS
+    // sameSite: "None",
+  });
+
+  res.json({ message: "Cookie cleared" });
 };
+
 const generateAccessToken = (user) => {
   return jwt.sign(
     {
@@ -75,7 +79,7 @@ const generateAccessToken = (user) => {
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "1000",
+      expiresIn: "2h",
     }
   );
 };

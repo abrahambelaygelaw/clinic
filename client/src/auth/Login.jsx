@@ -13,7 +13,8 @@ const Login = () => {
     try {
       const response = await axios.post(
         "http://localhost:5000/login",
-        formData
+        formData,
+        { withCredentials: true }
       );
       console.log(response);
       const { accessToken } = response.data;

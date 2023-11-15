@@ -27,9 +27,9 @@ const getDrugs = async (req, res) => {
   let filter = {};
   const name = req.query.name;
   const page = req.query.page || 1;
-  const perpage = req.query.perpage || 15;
+  const perpage = req.query.perpage || 10;
   const sort = req.query.sortedBy || "timestamp";
-  const order = req.query.order || "asc";
+  const order = req.query.order || "desc";
   const type = req.query.type;
   const skip = (page - 1) * perpage;
 
@@ -52,7 +52,7 @@ const getDrugs = async (req, res) => {
     const count = await Drug.countDocuments(filter);
     const data = await Drug.find(filter)
       .sort({
-        [sort]: order === "asc" ? 1 : -1,
+        [sort]: order === "desc" ? -1 : 1,
       })
       .skip(skip)
       .limit(perpage);

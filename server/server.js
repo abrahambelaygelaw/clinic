@@ -10,8 +10,9 @@ const app = express();
 const url =
   "mongodb+srv://wizhard:camel@cluster0.rvjfud9.mongodb.net/?retryWrites=true&w=majority";
 app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
+app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.options("*", cors());
 app.use(drug);
 app.use(transaction);
 app.use(Auth);

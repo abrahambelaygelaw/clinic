@@ -14,8 +14,8 @@ const Table = () => {
   const location = useLocation();
   const parsed = queryString.parse(location.search);
   const [filter, setFilter] = useState(parsed);
-  const [tableData, setTableData] = useState([]);
-  const [perPage, setPerPage] = useState(15);
+  const [tableData, setTableData] = useState();
+  const [perPage, setPerPage] = useState(10);
   const currentPage = parsed.page || 1;
   const [searchTerm, setSearchTerm] = useState(parsed.name ? parsed.name : "");
   const [count, setCount] = useState();
@@ -140,7 +140,7 @@ const Table = () => {
           </div>
 
           <div className="overflow-x-auto">
-            {tableData.length != 0 ? (
+            {tableData && tableData.length != 0 ? (
               <>
                 <DrugTable tableData={tableData} />
                 <Pagination
