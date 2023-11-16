@@ -8,15 +8,18 @@ import Login from "./auth/Login";
 import Drug from "./drugs/Drug";
 import Transaction from "./transaction/Transaction";
 import Navigation from "./Navigation";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/" element={<Login />} />
+        <Route index element={<Login />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/drug" element={<Drug />} />
-        <Route path="/transaction/:id" element={<Transaction />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/drug" element={<Drug />} />
+          <Route path="/transaction/:id" element={<Transaction />} />
+        </Route>
       </>
     )
   );

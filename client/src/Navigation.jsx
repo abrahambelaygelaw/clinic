@@ -7,7 +7,7 @@ const Navigation = () => {
   const navigate = useNavigate();
   const handleLogout = async () => {
     try {
-      const response = await axios.post(
+      await axios.post(
         `${URL}logout`,
         {},
         { withCredentials: true }
@@ -30,7 +30,16 @@ const Navigation = () => {
             Clinic
           </span>
         </a>
-        <div className="flex items-center">
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              navigate("/drug");
+            }}
+            className="text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-2 text-center mr-3 md:mr-0 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+          >
+            Drugs
+          </button>
           <button
             type="button"
             onClick={handleLogout}

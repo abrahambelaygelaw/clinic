@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import axios from "axios";
 import { TransactionContext } from "../Context";
-import DrugData from "./DrugData";
 import { URL } from "../Constants";
 import { useNavigate } from "react-router-dom";
 const TransactionForm = () => {
@@ -34,11 +33,11 @@ const TransactionForm = () => {
       await axios.post(`${URL}transaction`, formData);
       console.log("Form submitted successfully");
       // Optionally, you can redirect or show a success message
+      window.location.reload();
     } catch (error) {
       console.error("Error submitting form:", error);
       // Handle errors (e.g., show an error message)
     }
-    navigate(`/transaction/${drugData._id}`);
   };
 
   return (
