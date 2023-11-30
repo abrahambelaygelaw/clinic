@@ -15,7 +15,7 @@ const Table = () => {
   const { id } = useParams();
   const parsed = queryString.parse(location.search);
   const [filter, setFilter] = useState(parsed);
-  const [transactionData, setTransactionData] = useState([]);
+  const [transactionData, setTransactionData] = useState();
   const [count, setCount] = useState(0);
   const [perPage, setPerPage] = useState(15);
   const currentPage = parsed.page || 1;
@@ -26,6 +26,7 @@ const Table = () => {
   useEffect(() => {
     if (data) {
       setTransactionData(data.data);
+      console.log(transactionData);
       setCount(data.count);
     }
   }, [data]);
@@ -58,12 +59,13 @@ const Table = () => {
               Transaction
             </button>
           </div>
-          {transactionData.length != 0 ? (
+          {transactionData && transactionData.length != 0 && (
             <div className="overflow-x-auto">
               <TransactionTable transactionData={transactionData} />
               <Pagination page={currentPage} total={count} perPage={perPage} />
             </div>
-          ) : (
+          )}
+          {transactionData && transactionData.length == 0 && (
             <div className="flex w-full">
               <h3 className=" my-10 mx-auto">No Results found</h3>
             </div>

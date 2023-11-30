@@ -27,7 +27,9 @@ export const addTransaction = async (req, res) => {
 export const getAllTransactions = async (req, res) => {
   try {
     const count = await Transaction.countDocuments();
-    const data = await Transaction.find();
+    const data = await Transaction.find()
+      .sort({ ["date"]: -1 })
+      .populate("drug");
     res.json({ data, count });
   } catch (err) {
     console.error(err);

@@ -6,7 +6,7 @@ import {
   deleteDrug,
   updateDrug,
 } from "../../controller/drug.js";
-import { authenticateToken } from "../../Middlewares/verifyJWT.js";
+import { verifyToken } from "../../Middlewares/verifyJWT.js";
 const router = express.Router();
 router.post("/drug", addDrug);
 router.get("/drug", getDrugs);

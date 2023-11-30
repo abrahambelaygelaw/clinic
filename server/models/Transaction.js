@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const TransactionSchema = mongoose.Schema({
   drug: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Drug",
+    ref: "drug",
     required: true,
   },
   date: {
@@ -38,6 +38,7 @@ const TransactionSchema = mongoose.Schema({
   },
   remark: {
     type: String,
+    default: "-",
   },
 });
 

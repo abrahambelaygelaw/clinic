@@ -23,7 +23,6 @@ const getDrug = async (req, res) => {
   }
 };
 const getDrugs = async (req, res) => {
-  console.log(req.user);
   let filter = {};
   const name = req.query.name;
   const page = req.query.page || 1;

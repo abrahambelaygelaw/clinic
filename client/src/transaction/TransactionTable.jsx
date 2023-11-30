@@ -51,8 +51,8 @@ const TransactionTable = ({ transactionData }) => {
             </th>
             <td className="px-4 py-3">{item.place}</td>
             <td className="px-4 py-3">{item.documentRef}</td>
-            <td className="px-4 py-3">{item.in}</td>
-            <td className="px-4 py-3">{item.out}</td>
+            <td className="px-4 py-3">{item.in ? item.in : "-"}</td>
+            <td className="px-4 py-3">{item.out ? item.out : "-"}</td>
             <td className="px-4 py-3">{item.balance}</td>
             <td className="px-4 py-3">{dateFormatter(item.expDate)}</td>
             <td className="px-4 py-3">{item.batchNo}</td>

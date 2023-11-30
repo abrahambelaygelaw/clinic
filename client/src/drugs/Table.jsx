@@ -20,9 +20,7 @@ const Table = () => {
   const [searchTerm, setSearchTerm] = useState(parsed.name ? parsed.name : "");
   const [count, setCount] = useState();
   const { setShowDrugForm } = useContext(DrugContext);
-  const { data, error, loading } = useDataFetching(
-    `${URL}drug${location.search}`
-  );
+  const { data, error, loading } = useDataFetching(`drug${location.search}`);
   const debouncedInput = useDebounce(searchTerm, 300);
   useEffect(() => {
     if (data) {
@@ -140,7 +138,7 @@ const Table = () => {
           </div>
 
           <div className="overflow-x-auto">
-            {tableData && tableData.length != 0 ? (
+            {tableData && tableData.length != 0 && (
               <>
                 <DrugTable tableData={tableData} />
                 <Pagination
@@ -149,7 +147,8 @@ const Table = () => {
                   perPage={perPage}
                 />
               </>
-            ) : (
+            )}
+            {tableData && tableData.length == 0 && (
               <div className="flex w-full">
                 <h3 className=" my-10 mx-auto">No Results found</h3>
               </div>

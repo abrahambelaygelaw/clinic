@@ -17,7 +17,6 @@ const Transaction = () => {
       }}
     >
       <TransactionForm />
-      <Navigation />
       <Table />
     </TransactionContext.Provider>
   );
