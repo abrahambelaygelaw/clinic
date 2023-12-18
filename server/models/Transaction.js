@@ -34,7 +34,6 @@ const TransactionSchema = mongoose.Schema({
   },
   batchNo: {
     type: String,
-    required: true,
   },
   remark: {
     type: String,

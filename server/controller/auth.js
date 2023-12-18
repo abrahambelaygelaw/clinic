@@ -5,16 +5,17 @@ import dotenv from "dotenv";
 dotenv.config();
 
 export const login = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password) {
+  const { username, password } = req.body;
+  if (!username || !password) {
     return res.status(400).json({ message: "All fields are required" });
   }
   try {
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ username });
     if (!user) {
       return res.status(401).json({ message: "User not found" });
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
+
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid password" });
     }
@@ -68,20 +69,24 @@ const generateAccessToken = (user) => {
   return jwt.sign(
     {
       userInfo: {
-        email: user.email,
+        username: user.username,
         role: user.role,
       },
     },
     process.env.ACCESS_TOKEN_SECRET,
     {
-      expiresIn: "2minutes",
+      expiresIn: "1d",
     }
   );
 };
 const generateRefreshToken = (user) => {
-  return jwt.sign({ email: user.email }, process.env.REFRESH_TOKEN_SECRET, {
-    expiresIn: "14d",
-  });
+  return jwt.sign(
+    { username: user.username },
+    process.env.REFRESH_TOKEN_SECRET,
+    {
+      expiresIn: "14d",
+    }
+  );
 };
 
 export const getUsers = async (req, res) => {

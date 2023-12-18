@@ -9,20 +9,18 @@ import Auth from "./routes/Auth.js";
 import { verifyToken } from "./Middlewares/verifyJWT.js";
 const app = express();
 
-const url =
-  "mongodb+srv://wizhard:camel@cluster0.rvjfud9.mongodb.net/?retryWrites=true&w=majority";
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: "http://localhost:5173", credentials: true }));
 app.options("*", cors());
 app.use(Auth);
-app.use(verifyToken);
+// app.use(verifyToken);
 app.use(drug);
 app.use(transaction);
 app.use(user);
 
 mongoose
-  .connect(url, {
+  .connect(process.env.DB_STRING, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })

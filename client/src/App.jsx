@@ -4,38 +4,41 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import Login from "./auth/Login";
-import Drugs from "./drugs/Drugs";
-import Transaction from "./transaction/Transaction";
-import Navigation from "./Navigation";
-import ProtectedRoute from "./ProtectedRoute";
-import AllTransaction from "./transaction/AllTransaction";
-import Users from "./users/Users";
-import { UserContext } from "./Context";
-import { useState } from "react";
-
+import ProtectedRoute from "./Components/ProtectedRoute";
+import Unauthorized from "./pages/Unauthorized";
+import { AuthProvider } from "./context/AuthProvider.jsx";
+import UsersPage from "./pages/UsersPage";
+import DrugsPage from "./pages/DrugsPage";
+import AllTransactionsPage from "./pages/AllTransactionsPage";
+import TransactionPage from "./pages/TransactionPage";
+import LoginPage from "./pages/LoginPage";
+import ProfilePage from "./pages/ProfilePage";
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route index element={<Login />} />
-        <Route path="/login" element={<Login />} />
-        <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Navigation />}>
-            <Route path="/users" element={<Users />} />
-            <Route path="/drugs" element={<Drugs />} />
-            <Route path="/transaction" element={<AllTransaction />} />
-            <Route path="/transaction/:id" element={<Transaction />} />
-          </Route>
+        <Route index element={<LoginPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
+        <Route element={<ProtectedRoute allowedRoles={["admin", "user"]} />}>
+          <Route path="/drugs" element={<DrugsPage />} />
+          <Route path="/transaction" element={<AllTransactionsPage />} />
+          <Route path="/transaction/:id" element={<TransactionPage />} />
+          <Route path="/me" element={<ProfilePage />} />
+        </Route>
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+          <Route path="/users" element={<UsersPage />} />
         </Route>
       </>
     )
   );
 
   return (
-    <div className="bg-gray-50">
-      <RouterProvider router={router} />
-    </div>
+    <AuthProvider>
+      <div className="bg-gray-50">
+        <RouterProvider router={router} />
+      </div>
+    </AuthProvider>
   );
 }
 

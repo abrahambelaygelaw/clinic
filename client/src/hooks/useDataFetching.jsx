@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axiosWithAuth from "../Utility/axiosWithAuth";
+import axiosWithAuth from "../utility/axiosWithAuth";
 const useDataFetching = (url) => {
   const [data, setData] = useState();
   const [loading, setLoading] = useState(true);

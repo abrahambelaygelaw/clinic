@@ -20,18 +20,16 @@ const DrugSchema = new mongoose.Schema({
   },
   stockCardNo: {
     type: String,
-    required: true,
   },
   strength: {
     type: String,
+    required: true,
   },
   itemCode: {
     type: String,
-    required: true,
   },
   location: {
     type: String,
-    required: true,
   },
   timestamp: { type: Date, default: Date.now },
 });
