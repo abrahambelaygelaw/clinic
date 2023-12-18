@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 import axiosWithAuth from "../../utility/axiosWithAuth";
+import { toast, ToastContainer } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 const ChangePassword = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const [oldPassword, setOldPassword] = useState("");
@@ -15,11 +18,30 @@ const ChangePassword = () => {
         oldPassword,
         newPassword,
       });
-    } catch (error) {}
+      toast.success("Password changed", {
+        position: "top-right",
+        autoClose: 2000, // Time in milliseconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      window.location.reload();
+    } catch (error) {
+      toast.error("Something went wrong", {
+        position: "top-right",
+        autoClose: 2000, // Time in milliseconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
     setLoading(false);
   };
   return (
     <div className=" max-w-screen-lg m-3 lg:mx-auto p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <ToastContainer />
       <h5 className="mb-2 text-xl font-bold text-gray-900 dark:text-white">
         Change Password
       </h5>

@@ -4,7 +4,6 @@ import Transaction from "../models/Transaction.js";
 export const addTransaction = async (req, res) => {
   try {
     const formData = req.body;
-    console.log(formData);
     const drug = await Drug.findById(formData.drug);
     const newBalance =
       parseFloat(drug.balance) +

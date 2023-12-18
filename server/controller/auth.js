@@ -42,11 +42,9 @@ export const refresh = async (req, res) => {
         username: decoded.user,
       });
       if (!foundUser) {
-        console.log("User not found");
         return res.status(401).json({ decoded, message: "Unauthorized" });
       }
       const accessToken = generateAccessToken(foundUser);
-      console.log("new token " + accessToken);
       res.json(accessToken);
     }
   );
@@ -54,11 +52,9 @@ export const refresh = async (req, res) => {
 
 export const logout = (req, res) => {
   const cookies = req.cookies;
-  console.log(cookies);
   if (!cookies?.jwt) {
     return res.status(401).json({ message: "User is not logged in" });
   }
-  console.log("Logout request received");
 
   res.clearCookie("jwt", {});
 

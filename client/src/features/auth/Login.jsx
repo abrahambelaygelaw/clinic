@@ -32,9 +32,7 @@ const Login = () => {
       }
     } catch (err) {
       if (!err?.response) {
-        console.log("No Server Response");
       } else if (err.response?.status === 400) {
-        console.log("Missing Username or Password");
       } else if (err.response?.status === 401) {
         toast.error("Wrong username or password", {
           position: "top-right",
@@ -45,7 +43,6 @@ const Login = () => {
           draggable: true,
         });
       } else {
-        console.log("Login Failed");
         toast.error("Login Failed", {
           position: "top-right",
           autoClose: 2000, // Time in milliseconds

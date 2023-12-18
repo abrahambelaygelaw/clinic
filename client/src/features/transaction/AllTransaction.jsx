@@ -13,7 +13,6 @@ const AllTransaction = () => {
     if (data) {
       setTransactionData(data.data);
       setCount(data.count);
-      console.log(transactionData);
     }
   }, [data]);
 

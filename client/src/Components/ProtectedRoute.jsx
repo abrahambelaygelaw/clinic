@@ -3,9 +3,7 @@ import Navigation from "./Navigation";
 const ProtectedRoute = ({ allowedRoles }) => {
   // const { auth } = useAuth();
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
   const location = useLocation();
-  // console.log(auth);
   return allowedRoles?.includes(user?.role) ? (
     <>
       <Navigation />

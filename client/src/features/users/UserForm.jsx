@@ -9,17 +9,12 @@ const UserForm = () => {
   const handleCreate = async () => {
     try {
       const res = await axiosWithAuth.post("/user", values);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   const handleEdit = async () => {
     try {
       const res = await axiosWithAuth.put(`user/${itemToEdit._id}`, values);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
   const { errors, touched, handleBlur, handleSubmit, handleChange, values } =
     useFormik({

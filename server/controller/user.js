@@ -17,7 +17,6 @@ const addUser = async (req, res) => {
       role: admin ? "admin" : "user",
     });
 
-    console.log(newUser);
     await newUser.save();
     res.status(201).json({ message: "User registered successfully" });
   } catch (error) {
@@ -29,9 +28,7 @@ const changePassword = async (req, res) => {
   try {
     const { id } = req.params;
     const { oldPassword, newPassword } = req.body;
-    console.log(id);
     const user = await User.findById(id);
-    console.log(user);
 
     const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
 
@@ -40,15 +37,12 @@ const changePassword = async (req, res) => {
     }
 
     if (!isPasswordValid) {
-      console.log("password is not valid");
       return res.status(401).json({ message: "Invalid old password" });
     }
 
     // Update password with the new hashed password
     const newHashedPassword = await bcrypt.hash(newPassword, 10);
-    console.log(newHashedPassword);
     user.password = newHashedPassword;
-    console.log(user);
     await user.save();
 
     res.status(200).json({ message: "Password updated successfully" });
@@ -60,9 +54,7 @@ const getUsers = async (req, res) => {
   try {
     const users = await User.find();
     res.json(users);
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 const updateUser = async (req, res) => {
   try {

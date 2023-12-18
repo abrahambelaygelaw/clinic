@@ -14,10 +14,8 @@ const Profile = () => {
       await axiosWithAuth.post("logout");
       localStorage.removeItem("user");
       localStorage.removeItem("accessToken");
-      navigate("/login");
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
+    navigate("/login");
     setLoading(false);
   };
 

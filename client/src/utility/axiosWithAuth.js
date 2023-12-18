@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosWithAuth = axios.create({
-  baseURL: "http://localhost:5000/",
+  baseURL: "https://pharmacy-wvj8.onrender.com/",
   withCredentials: true,
 });
 

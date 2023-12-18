@@ -16,7 +16,6 @@ const AddDrug = () => {
     setLoading(true);
     try {
       const response = await axiosWithAuth.post(`drug`, values);
-      console.log("Form submitted successfully.", response.data);
       toast.success("Drug saved successfully", {
         position: "top-right",
         autoClose: 2000, // Time in milliseconds
@@ -45,7 +44,6 @@ const AddDrug = () => {
     setLoading(true);
     try {
       await axiosWithAuth.put(`drug/${itemToEdit._id}`, values);
-      console.log("Record updated successfully");
       toast.success("Drug saved successfully", {
         position: "top-right",
         autoClose: 2000, // Time in milliseconds

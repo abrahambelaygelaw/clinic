@@ -2,7 +2,6 @@ import useUser from "../../hooks/useUser";
 const userInitialValues = () => {
   const { itemToEdit } = useUser();
   if (itemToEdit) {
-    console.log(itemToEdit);
     return {
       firstName: itemToEdit.firstName,
       lastName: itemToEdit.lastName,

@@ -8,7 +8,6 @@ const useDataFetching = (url) => {
     try {
       const response = await axiosWithAuth.get(url);
       setData(response.data);
-      console.log(response.data);
     } catch (err) {
       setError(err);
     } finally {

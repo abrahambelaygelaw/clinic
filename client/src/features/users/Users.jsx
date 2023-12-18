@@ -8,17 +8,10 @@ const Users = () => {
   const [users, setUsers] = useState();
   const { data, error } = useDataFetching("user");
   const user = JSON.parse(localStorage.getItem("user"));
-  const {
-    setShowForm,
-    setItemToEdit,
-    setItemToDelete,
-    itemToEdit,
-    itemToDelete,
-  } = useUser();
+  const { setShowForm, setItemToEdit, setItemToDelete } = useUser();
   useEffect(() => {
     if (data) {
       setUsers(data);
-      console.log(data);
     }
   }, [data]);
 
@@ -26,7 +19,7 @@ const Users = () => {
     <>
       <Delete />
       <UserForm />
-      <div class="bg-white dark:bg-gray-900">
+      <div class=" dark:bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
           <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
             <h2 class="mb-4 text-xl tracking-tight font-old text-gray-900 dark:text-white">
@@ -65,7 +58,6 @@ const Users = () => {
                         className="flex-1 flex justify-center border-r-2"
                         onClick={() => {
                           setItemToEdit(item);
-                          console.log(itemToEdit);
                           setShowForm(true);
                         }}
                       >

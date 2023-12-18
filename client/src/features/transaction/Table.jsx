@@ -25,7 +25,6 @@ const Table = () => {
   useEffect(() => {
     if (data) {
       setTransactionData(data.data);
-      console.log(transactionData);
       setCount(data.count);
     }
   }, [data]);
