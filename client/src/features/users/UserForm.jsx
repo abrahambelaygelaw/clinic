@@ -54,7 +54,7 @@ const UserForm = () => {
       enableReinitialize: true,
       onSubmit: itemToEdit ? handleEdit : handleCreate,
     });
-
+  console.log(itemToEdit);
   return (
     <>
       <ToastContainer />
