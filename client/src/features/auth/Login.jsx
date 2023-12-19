@@ -13,7 +13,7 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axiosWithAuth.post("/login", {
+      const response = await axiosWithAuth.post("login", {
         username,
         password,
       });
