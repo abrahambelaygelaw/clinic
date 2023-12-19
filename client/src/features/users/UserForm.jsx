@@ -3,18 +3,62 @@ import axiosWithAuth from "../../utility/axiosWithAuth";
 import { useFormik } from "formik";
 import userInitialValues from "./userInitialValues";
 import userValidationSchema from "./userValidationSchema";
+import { toast, ToastContainer } from "react-toastify";
+import { useState } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
 const UserForm = () => {
-  const { itemToDelete, showForm, setShowForm, itemToEdit, setItemToEdit } =
-    useUser();
+  const { showForm, setShowForm, itemToEdit, setItemToEdit } = useUser();
+  const [loading, setLoading] = useState(false);
   const handleCreate = async () => {
+    setLoading(true);
     try {
-      const res = await axiosWithAuth.post("/user", values);
-    } catch (error) {}
+      await axiosWithAuth.post("/user", values);
+      toast.success("User updated successfully", {
+        position: "top-right",
+        autoClose: 2000, // Time in milliseconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } catch (error) {
+      toast.error("Error updating", {
+        position: "top-right",
+        autoClose: 2000, // Time in milliseconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+    setLoading(false);
   };
   const handleEdit = async () => {
+    setLoading(true);
     try {
-      const res = await axiosWithAuth.put(`user/${itemToEdit._id}`, values);
-    } catch (error) {}
+      await axiosWithAuth.put(`user/${itemToEdit._id}`, values);
+
+      toast.success("User updated successfully", {
+        position: "top-right",
+        autoClose: 2000, // Time in milliseconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } catch (error) {
+      toast.error("Error updating", {
+        position: "top-right",
+        autoClose: 2000, // Time in milliseconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    }
+    setLoading(false);
+    setShowForm(false);
+    Navigate("/users");
   };
   const { errors, touched, handleBlur, handleSubmit, handleChange, values } =
     useFormik({
@@ -30,6 +74,7 @@ const UserForm = () => {
         showForm ? "" : "hidden"
       } fixed  bg-black bg-opacity-60 z-10`}
     >
+      <ToastContainer />
       <div className={`m-3 md:mx-auto mt-6 p-3 max-w-2xl bg-white rounded-lg`}>
         {" "}
         <div className="flex items-start justify-between p-4 mb-4 border-b rounded-t dark:border-gray-600">
@@ -166,10 +211,20 @@ const UserForm = () => {
           </div>
           <div class="flex items-center space-x-4">
             <button
+              disabled={loading}
               type="submit"
               class="text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800"
             >
-              Save
+              {" "}
+              <ClipLoader
+                color="#ffffff"
+                loading={loading}
+                // cssOverride={override}
+                size={20}
+                aria-label="Loading Spinner"
+                data-testid="loader"
+              />
+              <span className="mx-3"> Save</span>
             </button>
           </div>
         </form>
