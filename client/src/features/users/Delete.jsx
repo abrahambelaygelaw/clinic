@@ -1,7 +1,6 @@
 import { ToastContainer, toast } from "react-toastify";
 import axiosWithAuth from "../../utility/axiosWithAuth";
 import useUser from "../../hooks/useUser";
-import { useNavigate } from "react-router-dom";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useState } from "react";
 const Delete = () => {
@@ -11,15 +10,7 @@ const Delete = () => {
     setLoading(true);
     try {
       await axiosWithAuth.delete(`user/${itemToDelte._id}`);
-
-      toast.success("User deleted successfully", {
-        position: "top-right",
-        autoClose: 2000, // Time in milliseconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      window.location.reload();
     } catch (error) {
       console.error(error);
       toast.error("An error occurred", {
@@ -33,7 +24,6 @@ const Delete = () => {
     }
     setItemToDelete(null);
     setLoading(false);
-    window.location.reload();
   };
 
   return (

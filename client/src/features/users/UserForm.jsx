@@ -13,16 +13,10 @@ const UserForm = () => {
     setLoading(true);
     try {
       await axiosWithAuth.post("/user", values);
-      toast.success("User updated successfully", {
-        position: "top-right",
-        autoClose: 2000, // Time in milliseconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+
+      window.location.reload();
     } catch (error) {
-      toast.error("Error updating", {
+      toast.error("Error creating user", {
         position: "top-right",
         autoClose: 2000, // Time in milliseconds
         hideProgressBar: false,
@@ -33,21 +27,12 @@ const UserForm = () => {
     }
     setLoading(false);
     setShowForm(false);
-    window.location.reload();
   };
   const handleEdit = async () => {
     setLoading(true);
     try {
       await axiosWithAuth.put(`user/${itemToEdit._id}`, values);
-
-      toast.success("User updated successfully", {
-        position: "top-right",
-        autoClose: 2000, // Time in milliseconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      window.location.reload();
     } catch (error) {
       toast.error("Error updating", {
         position: "top-right",
@@ -60,7 +45,6 @@ const UserForm = () => {
     }
     setLoading(false);
     setShowForm(false);
-    window.location.reload();
   };
   const { errors, touched, handleBlur, handleSubmit, handleChange, values } =
     useFormik({
@@ -112,7 +96,7 @@ const UserForm = () => {
               </svg>
             </button>
           </div>
-          <form action="#" onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit}>
             <div class="grid gap-4 mb-4 sm:grid-cols-2">
               <div>
                 <label
