@@ -48,7 +48,7 @@ const Navigation = () => {
                 </g>
               </g>
             </svg>
-            <span className="elf-center text-xl font-semibold whitespace-nowrap dark:text-white">
+            <span className="elf-center text-xl font-semibold whitespace-nowrap dark:text-white mx-2">
               Pharmacy
             </span>
           </div>
