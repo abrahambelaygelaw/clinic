@@ -30,6 +30,7 @@ const UserForm = () => {
   };
   const handleEdit = async () => {
     setLoading(true);
+    console.log("edit ");
     try {
       await axiosWithAuth.put(`user/${itemToEdit._id}`, values);
       window.location.reload();
