@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosWithAuth = axios.create({
-  baseURL: "https://pharmacy-wvj8.onrender.com/",
+  baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
 });
 
