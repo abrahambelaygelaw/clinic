@@ -2,14 +2,16 @@ import { ToastContainer, toast } from "react-toastify";
 import axiosWithAuth from "../../utility/axiosWithAuth";
 import useUser from "../../hooks/useUser";
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
 const Delete = () => {
   const { itemToDelte, setItemToDelete } = useUser();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const handleDelete = async () => {
+    setLoading(true);
     try {
-      const response = await axiosWithAuth.delete(`user/${itemToDelte._id}`);
+      await axiosWithAuth.delete(`user/${itemToDelte._id}`);
 
-      navigate("/users");
       toast.success("User deleted successfully", {
         position: "top-right",
         autoClose: 2000, // Time in milliseconds
@@ -29,7 +31,9 @@ const Delete = () => {
         draggable: true,
       });
     }
+    navigate("/users");
     setItemToDelete(null);
+    setLoading(false);
   };
 
   return (
@@ -74,9 +78,18 @@ const Delete = () => {
                   onClick={handleDelete}
                   id="confirm-button"
                   type="button"
+                  disabled={loading}
                   className="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg bg-red-700 sm:w-auto hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 >
-                  Delete
+                  <ClipLoader
+                    color="#ffffff"
+                    loading={loading}
+                    // cssOverride={override}
+                    size={20}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                  <span className="mx-3">Delete</span>
                 </button>
               </div>
             </div>
