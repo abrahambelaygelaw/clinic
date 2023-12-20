@@ -52,16 +52,17 @@ const UserForm = () => {
       initialValues: userInitialValues(),
       validationSchema: userValidationSchema(itemToEdit),
       enableReinitialize: true,
-      onSubmit: async () => {
+      onSubmit: () => {
+        console.log("Item to edit", itemToEdit);
+
         if (itemToEdit) {
           console.log("Item to edit", itemToEdit);
-          await handleEdit();
+          handleEdit();
         } else {
           handleCreate();
         }
       },
     });
-  console.log(itemToEdit);
   return (
     <>
       <ToastContainer />
