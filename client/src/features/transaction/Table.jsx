@@ -14,7 +14,7 @@ const Table = () => {
   const { id } = useParams();
   const parsed = queryString.parse(location.search);
   const [filter, setFilter] = useState(parsed);
-  const [transactionData, setTransactionData] = useState();
+  const { transactionData, setTransactionData } = useTransaction();
   const [count, setCount] = useState(0);
   const [perPage, setPerPage] = useState(15);
   const currentPage = parsed.page || 1;

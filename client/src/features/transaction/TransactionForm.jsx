@@ -4,11 +4,12 @@ import axiosWithAuth from "../../utility/axiosWithAuth";
 import { toast, ToastContainer } from "react-toastify";
 import transactionValidationSchema from "./TransactionValidation";
 import { useFormik } from "formik";
+import useTransaction from "../../hooks/useTransaction";
+import { useState } from "react";
 const TransactionForm = () => {
-  const { id } = useParams();
   const { showForm, setShowForm, drugData } = useTransaction();
-
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState();
+  const { setTransactionData } = useTransaction();
   const {
     errors,
     touched,
@@ -31,11 +32,14 @@ const TransactionForm = () => {
     enableReinitialize: true,
     onSubmit: async () => {
       try {
-        await axiosWithAuth.post(`transaction`, {
+        const res = await axiosWithAuth.post(`transaction`, {
           ...values,
           drug: drugData._id,
         });
-        toast.success("Form submitted successfully", {
+        setTransactionData((prev) => {
+          return [...prev, res];
+        });
+        toast.success("Transaction saved successfully", {
           position: "top-right",
           autoClose: 2000, // Time in milliseconds
           hideProgressBar: false,
@@ -43,7 +47,6 @@ const TransactionForm = () => {
           pauseOnHover: true,
           draggable: true,
         });
-        navigate(`/transaction/${id}`);
         setShowForm(false);
       } catch (error) {
         toast.error("Error submitting transaction", {
@@ -223,9 +226,18 @@ const TransactionForm = () => {
           </div>
           <button
             type="submit"
-            className="mt-6 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+            disabled={loading}
+            className="mt-6 text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800 flex justify-center items-center"
           >
-            Submit
+            {" "}
+            <ClipLoader
+              color="#ffffff"
+              loading={loading}
+              size={20}
+              aria-label="Loading Spinner"
+              data-testid="loader"
+            />
+            <span className="mx-3">Submit</span>
           </button>
         </form>
       </div>

@@ -5,6 +5,8 @@ export const TransactionProvider = ({ children }) => {
   const [itemToEdit, setItemToEdit] = useState(null);
   const [showForm, setShowForm] = useState(false);
   const [drugData, setDrugData] = useState(null);
+  const [transactionData, setTransactionData] = useState();
+
   return (
     <TransactionContext.Provider
       value={{
@@ -16,6 +18,8 @@ export const TransactionProvider = ({ children }) => {
         setItemToEdit,
         drugData,
         setDrugData,
+        transactionData,
+        setTransactionData,
       }}
     >
       {children}
