@@ -113,11 +113,11 @@ const UserForm = ({ setUsers }) => {
             </button>
           </div>
           <form onSubmit={handleSubmit}>
-            <div class="grid gap-4 mb-4 sm:grid-cols-2">
+            <div className="grid gap-4 mb-4 sm:grid-cols-2">
               <div>
                 <label
                   for="firstName"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   First Name
                 </label>
@@ -128,7 +128,7 @@ const UserForm = ({ setUsers }) => {
                   onBlur={handleBlur}
                   value={values.firstName}
                   onChange={handleChange}
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 />
                 {touched.firstName && errors.firstName ? (
                   <div style={{ color: "darkgreen" }}>{errors.firstName}</div>
@@ -137,7 +137,7 @@ const UserForm = ({ setUsers }) => {
               <div>
                 <label
                   for="lastName"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  classNameNameNameNameNameName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Last Name
                 </label>
@@ -148,7 +148,7 @@ const UserForm = ({ setUsers }) => {
                   name="lastName"
                   id="lastName"
                   value={values.lastName}
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 />
                 {touched.lastName && errors.lastName ? (
                   <div style={{ color: "darkgreen" }}>{errors.lastName}</div>
@@ -157,7 +157,7 @@ const UserForm = ({ setUsers }) => {
               <div>
                 <label
                   for="username"
-                  class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Username
                 </label>
@@ -168,7 +168,7 @@ const UserForm = ({ setUsers }) => {
                   onBlur={handleBlur}
                   id="username"
                   value={values.username}
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                 />
                 {touched.username && errors.username ? (
                   <div style={{ color: "darkgreen" }}>{errors.username}</div>
@@ -178,7 +178,7 @@ const UserForm = ({ setUsers }) => {
                 <div>
                   <label
                     for="password"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
                     Password
                   </label>
@@ -190,14 +190,14 @@ const UserForm = ({ setUsers }) => {
                     disabled={!!itemToEdit}
                     onBlur={handleBlur}
                     value={values.password}
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   />
                   {touched.password && errors.password ? (
                     <div style={{ color: "darkgreen" }}>{errors.password}</div>
                   ) : null}
                 </div>
               )}
-              <div class="flex items-center my-4">
+              <div className="flex items-center my-4">
                 <input
                   id="admin"
                   name="admin"
@@ -205,21 +205,21 @@ const UserForm = ({ setUsers }) => {
                   onBlur={handleBlur}
                   checked={values.admin}
                   onChange={handleChange}
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
                   for="admin"
-                  class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   Admin
                 </label>
               </div>
             </div>
-            <div class="flex items-center space-x-4">
+            <div className="flex items-center space-x-4">
               <button
                 disabled={loading}
                 type="submit"
-                class="flex justify-center items-center text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 disabled:cursor-not-allowed"
+                className="flex justify-center items-center text-white bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-800 disabled:cursor-not-allowed"
               >
                 {" "}
                 <ClipLoader

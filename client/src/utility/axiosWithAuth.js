@@ -2,8 +2,8 @@ import axios from "axios";
 
 const axiosWithAuth = axios.create({
   baseURL:
-    // import.meta.env.VITE_BASE_URL || "https://pharmacy-wvj8.onrender.com/",
-  baseURL: "https://pharmacy-wvj8.onrender.com/",
+    import.meta.env.VITE_BASE_URL || "https://pharmacy-wvj8.onrender.com/",
+  // baseURL: "https://pharmacy-wvj8.onrender.com/",
   withCredentials: true,
 });
 
