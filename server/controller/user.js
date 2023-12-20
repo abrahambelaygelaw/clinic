@@ -18,7 +18,7 @@ const addUser = async (req, res) => {
     });
 
     await newUser.save();
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json(newUser);
   } catch (error) {
     console.error("Registration error : ", error);
     res.status(500).json({ message: "Internal server error" });
@@ -79,7 +79,8 @@ const deleteUser = async (req, res) => {
     if (!deletedUser) {
       return res.status(404).json({ message: "User not found" });
     }
-    res.status(200).json({ message: "User deleted" });
+    const users = await User.find();
+    res.status(200).json(users);
   } catch (error) {
     console.error(error, "error deleting user");
     res.status(500).json({ message: "Internal Server Error" });

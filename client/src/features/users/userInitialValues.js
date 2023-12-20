@@ -7,6 +7,7 @@ const userInitialValues = () => {
       lastName: itemToEdit.lastName,
       username: itemToEdit.username,
       admin: itemToEdit.role == "admin",
+      password: itemToEdit.password,
     };
   } else {
     return {

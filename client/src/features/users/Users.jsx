@@ -17,8 +17,8 @@ const Users = () => {
 
   return (
     <>
-      <Delete />
-      <UserForm />
+      <Delete setUsers={setUsers} />
+      <UserForm setUsers={setUsers} />
       <div class=" dark:bg-gray-900">
         <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
           <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
@@ -47,11 +47,11 @@ const Users = () => {
                     </svg>
                   </div>
                   <div className=" ">
-                    <h3 class="mb-1 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                      {item.firstName} {item.lastName}{" "}
+                    <h3 class="m-1  text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                      {item?.firstName} {item?.lastName}{" "}
                     </h3>
-                    <p>{item.role} </p>
-                    <p>{item.username} </p>
+                    <p>{item?.role} </p>
+                    <p>{item?.username} </p>
                     <div className="text-2xl  flex p-2 bg-gray-100">
                       {" "}
                       <button

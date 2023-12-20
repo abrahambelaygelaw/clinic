@@ -3,14 +3,14 @@ import axiosWithAuth from "../../utility/axiosWithAuth";
 import useUser from "../../hooks/useUser";
 import ClipLoader from "react-spinners/ClipLoader";
 import { useState } from "react";
-const Delete = () => {
+const Delete = ({ setUsers }) => {
   const { itemToDelte, setItemToDelete } = useUser();
   const [loading, setLoading] = useState(false);
   const handleDelete = async () => {
     setLoading(true);
     try {
-      await axiosWithAuth.delete(`user/${itemToDelte._id}`);
-      window.location.reload();
+      const res = await axiosWithAuth.delete(`user/${itemToDelte._id}`);
+      setUsers(res.data);
     } catch (error) {
       console.error(error);
       toast.error("An error occurred", {
@@ -21,9 +21,10 @@ const Delete = () => {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setItemToDelete(null);
+      setLoading(false);
     }
-    setItemToDelete(null);
-    setLoading(false);
   };
 
   return (

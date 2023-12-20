@@ -6,15 +6,17 @@ import userValidationSchema from "./userValidationSchema";
 import { toast, ToastContainer } from "react-toastify";
 import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
-const UserForm = () => {
+const UserForm = ({ setUsers }) => {
   const { showForm, setShowForm, itemToEdit, setItemToEdit } = useUser();
   const [loading, setLoading] = useState(false);
   const handleCreate = async () => {
     setLoading(true);
     try {
-      await axiosWithAuth.post("/user", values);
-
-      window.location.reload();
+      const res = await axiosWithAuth.post("/user", values);
+      console.log("new user ", res);
+      setUsers((prev) => {
+        return [...prev, res.data];
+      });
     } catch (error) {
       toast.error("Error creating user", {
         position: "top-right",
@@ -24,16 +26,16 @@ const UserForm = () => {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setLoading(false);
+      setShowForm(false);
     }
-    setLoading(false);
-    setShowForm(false);
   };
   const handleEdit = async () => {
     console.log("edit ");
     setLoading(true);
     try {
       await axiosWithAuth.put(`user/${itemToEdit._id}`, values);
-      window.location.reload();
     } catch (error) {
       toast.error("Error updating", {
         position: "top-right",
@@ -43,26 +45,31 @@ const UserForm = () => {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setLoading(false);
+      setShowForm(false);
     }
-    setLoading(false);
-    setShowForm(false);
   };
-  const { errors, touched, handleBlur, handleSubmit, handleChange, values } =
-    useFormik({
-      initialValues: userInitialValues(),
-      validationSchema: userValidationSchema(itemToEdit),
-      enableReinitialize: true,
-      onSubmit: () => {
-        console.log("Item to edit", itemToEdit);
-
-        if (itemToEdit) {
-          console.log("Item to edit", itemToEdit);
-          handleEdit();
-        } else {
-          handleCreate();
-        }
-      },
-    });
+  const {
+    errors,
+    touched,
+    handleBlur,
+    handleSubmit,
+    handleChange,
+    values,
+    setValues,
+  } = useFormik({
+    initialValues: userInitialValues(),
+    validationSchema: userValidationSchema(),
+    enableReinitialize: true,
+    onSubmit: () => {
+      if (itemToEdit) {
+        handleEdit();
+      } else {
+        handleCreate();
+      }
+    },
+  });
   return (
     <>
       <ToastContainer />
@@ -180,6 +187,7 @@ const UserForm = () => {
                     type="text"
                     name="password"
                     id="password"
+                    disabled={!!itemToEdit}
                     onBlur={handleBlur}
                     value={values.password}
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"

@@ -26,7 +26,9 @@ const ChangePassword = () => {
         pauseOnHover: true,
         draggable: true,
       });
-      window.location.reload();
+      setNewPassword("");
+      setConfirmPassword("");
+      setOldPassword("");
     } catch (error) {
       toast.error("Something went wrong", {
         position: "top-right",
