@@ -35,7 +35,7 @@ const TransactionForm = () => {
           ...values,
           drug: drugData._id,
         });
-        const res = axiosWithAuth.get("transaction");
+        const res = axiosWithAuth.get(`transaction/${drugData._id}`);
         setTransactionData((prev) => {
           return res.data;
         });
