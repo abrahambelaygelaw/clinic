@@ -31,12 +31,13 @@ const TransactionForm = () => {
     onSubmit: async () => {
       setLoading(true);
       try {
-        const res = await axiosWithAuth.post(`transaction`, {
+        await axiosWithAuth.post(`transaction`, {
           ...values,
           drug: drugData._id,
         });
+        const res = axiosWithAuth.get("transaction");
         setTransactionData((prev) => {
-          return [...prev, res.data];
+          return res.data;
         });
         toast.success("Transaction saved successfully", {
           position: "top-right",
