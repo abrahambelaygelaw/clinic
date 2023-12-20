@@ -52,9 +52,9 @@ const UserForm = () => {
       initialValues: userInitialValues(),
       validationSchema: userValidationSchema(itemToEdit),
       enableReinitialize: true,
-      onSubmit: () => {
+      onSubmit: async () => {
         if (itemToEdit) {
-          handleEdit();
+          await handleEdit();
         } else {
           handleCreate();
         }
