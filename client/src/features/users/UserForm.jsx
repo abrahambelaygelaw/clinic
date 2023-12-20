@@ -52,7 +52,13 @@ const UserForm = () => {
       initialValues: userInitialValues(),
       validationSchema: userValidationSchema(itemToEdit),
       enableReinitialize: true,
-      onSubmit: itemToEdit ? handleEdit : handleCreate,
+      onSubmit: () => {
+        if (itemToEdit) {
+          handleEdit();
+        } else {
+          handleCreate();
+        }
+      },
     });
   console.log(itemToEdit);
   return (
