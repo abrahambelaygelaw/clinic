@@ -54,6 +54,7 @@ const UserForm = () => {
       enableReinitialize: true,
       onSubmit: async () => {
         if (itemToEdit) {
+          console.log("Item to edit", itemToEdit);
           await handleEdit();
         } else {
           handleCreate();
