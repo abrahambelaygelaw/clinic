@@ -136,8 +136,8 @@ const UserForm = ({ setUsers }) => {
               </div>
               <div>
                 <label
-                  for="lastName"
-                  classNameNameNameNameNameName="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  for="firstName"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
                   Last Name
                 </label>

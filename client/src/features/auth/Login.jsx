@@ -20,14 +20,7 @@ const Login = () => {
       if (response.status === 200) {
         localStorage.setItem("accessToken", response.data.accessToken);
         localStorage.setItem("user", JSON.stringify(response.data.user));
-        toast.success("Login Success", {
-          position: "top-right",
-          autoClose: 2000, // Time in milliseconds
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
+
         navigate("/drugs");
       }
     } catch (err) {

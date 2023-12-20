@@ -18,14 +18,7 @@ const ChangePassword = () => {
         oldPassword,
         newPassword,
       });
-      toast.success("Password changed", {
-        position: "top-right",
-        autoClose: 2000, // Time in milliseconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+
       setNewPassword("");
       setConfirmPassword("");
       setOldPassword("");

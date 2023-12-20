@@ -2,20 +2,18 @@ import { ToastContainer, toast } from "react-toastify";
 import useDrug from "../../hooks/useDrug";
 import axiosWithAuth from "../../utility/axiosWithAuth";
 import { useNavigate } from "react-router-dom";
+import ClipLoader from "react-spinners/ClipLoader";
+import { useState } from "react";
+
 const Delete = () => {
   const { itemToDelte, setItemToDelete } = useDrug();
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const handleDelete = async () => {
+    setLoading(true);
     try {
       const response = await axiosWithAuth.delete(`drug/${itemToDelte._id}`);
-      toast.success("Deleted Successfully", {
-        position: "top-right",
-        autoClose: 2000, // Time in milliseconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
       navigate("/drugs");
     } catch (error) {
       console.error(error);
@@ -27,8 +25,10 @@ const Delete = () => {
         pauseOnHover: true,
         draggable: true,
       });
+    } finally {
+      setLoading(false);
+      setItemToDelete(null);
     }
-    setItemToDelete(null);
   };
 
   return (
@@ -52,9 +52,8 @@ const Delete = () => {
               </h2>
               <p>
                 Are you sure you want to delete this item? This action cannot be
-                undone. Deleting the item will permanently remove it from your
-                records. Please confirm whether you want to proceed with the
-                deletion.
+                undone. Deleting the item will permanently remove all the
+                transactions made with this item.
               </p>
             </div>
             <div className="justify-between items-center pt-0 space-y-4 sm:flex sm:space-y-0">
@@ -70,12 +69,22 @@ const Delete = () => {
                   Cancel
                 </button>
                 <button
-                  onClick={handleDelete}
+                  onClick={() => {
+                    handleDelete();
+                  }}
                   id="confirm-button"
                   type="button"
-                  className="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg bg-red-700 sm:w-auto hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  className="py-2 px-4 w-full text-sm font-medium text-center text-white rounded-lg bg-red-700 sm:w-auto hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 flex justify-center items-center"
                 >
-                  Delete
+                  <ClipLoader
+                    color="#ffffff"
+                    loading={loading}
+                    // cssOverride={override}
+                    size={20}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                  />
+                  <span className="mx-2">Delete</span>
                 </button>
               </div>
             </div>

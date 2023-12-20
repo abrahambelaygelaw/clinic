@@ -3,9 +3,10 @@ import queryString from "query-string";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import useDataFetching from "../../hooks/useDataFetching";
 import TransactionTable from "./TransactionTable";
-import Pagination from "../../Components/Pagination";
+// import Pagination from "../../Components/Pagination";
 import DrugData from "./DrugData";
 import useTransaction from "../../hooks/useTransaction";
+import Pagination from "../../Components/Pagination";
 
 const Table = () => {
   const { setShowForm } = useTransaction();
@@ -13,13 +14,12 @@ const Table = () => {
   const location = useLocation();
   const { id } = useParams();
   const parsed = queryString.parse(location.search);
-  const [filter, setFilter] = useState(parsed);
   const { transactionData, setTransactionData } = useTransaction();
   const [count, setCount] = useState(0);
-  const [perPage, setPerPage] = useState(15);
+  const [perPage, setPerPage] = useState(5);
   const currentPage = parsed.page || 1;
   const { data, error, loading } = useDataFetching(
-    `transaction/${id}/${location.search}`
+    `transaction/${id + location.search}`
   );
 
   useEffect(() => {

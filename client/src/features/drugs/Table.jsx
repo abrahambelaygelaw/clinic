@@ -8,6 +8,7 @@ import { makeQueryString } from "../../utility/makeQueryString";
 import { TfiReload } from "react-icons/tfi";
 import useDebounce from "../../hooks/useDebounce";
 import useDrug from "../../hooks/useDrug";
+
 const Table = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -17,7 +18,7 @@ const Table = () => {
   const [perPage, setPerPage] = useState(10);
   const currentPage = parsed.page || 1;
   const [searchTerm, setSearchTerm] = useState(parsed.name ? parsed.name : "");
-  const [count, setCount] = useState();
+  const [count, setCount] = useState(0);
   const { setShowForm } = useDrug();
   const { data, error, loading } = useDataFetching(`drug${location.search}`);
   const debouncedInput = useDebounce(searchTerm, 300);

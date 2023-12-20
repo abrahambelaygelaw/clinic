@@ -16,14 +16,6 @@ const AddDrug = () => {
     setLoading(true);
     try {
       const response = await axiosWithAuth.post(`drug`, values);
-      toast.success("Drug saved successfully", {
-        position: "top-right",
-        autoClose: 2000, // Time in milliseconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
 
       setShowForm(false);
       navigate("/drugs");
@@ -44,14 +36,6 @@ const AddDrug = () => {
     setLoading(true);
     try {
       await axiosWithAuth.put(`drug/${itemToEdit._id}`, values);
-      toast.success("Drug saved successfully", {
-        position: "top-right",
-        autoClose: 2000, // Time in milliseconds
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
 
       setShowForm(false);
       navigate("/drugs");

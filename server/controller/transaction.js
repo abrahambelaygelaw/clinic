@@ -24,11 +24,17 @@ export const addTransaction = async (req, res) => {
 };
 
 export const getAllTransactions = async (req, res) => {
+  const perpage = req.query.perpage || 10;
+  const page = req.query.page || 1;
+  const skip = (page - 1) * perpage;
+
   try {
     const count = await Transaction.countDocuments();
     const data = await Transaction.find()
       .sort({ ["date"]: -1 })
-      .populate("drug");
+      .populate("drug")
+      .skip(skip)
+      .limit(perpage);
     res.json({ data, count });
   } catch (err) {
     console.error(err);
@@ -37,11 +43,17 @@ export const getAllTransactions = async (req, res) => {
 };
 
 export const getTransactions = async (req, res) => {
+  const perpage = req.query.perpage || 10;
+  const page = req.query.page || 1;
+  const skip = (page - 1) * perpage;
   try {
     const count = await Transaction.countDocuments({ drug: req.params.id });
-    const data = await Transaction.find({ drug: req.params.id }).sort({
-      ["date"]: -1,
-    });
+    const data = await Transaction.find({ drug: req.params.id })
+      .sort({
+        ["date"]: -1,
+      })
+      .skip(skip)
+      .limit(perpage);
     res.json({ data, count });
   } catch (err) {
     console.error(err);

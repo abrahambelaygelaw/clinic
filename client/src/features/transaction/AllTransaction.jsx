@@ -1,13 +1,19 @@
+import queryString from "query-string";
 import React, { useEffect, useState } from "react";
 import useDataFetching from "../../hooks/useDataFetching";
 import { dateFormatter } from "../../utility/dateFormatter";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
 import Pagination from "../../Components/Pagination";
 
 const AllTransaction = () => {
   const [transactionData, setTransactionData] = useState();
+  const location = useLocation();
   const [count, setCount] = useState(0);
-  const { data } = useDataFetching(`transaction`);
+  const parsed = queryString.parse(location.search);
+  const { data } = useDataFetching(`transaction${location.search}`);
+  const [perPage, setPerPage] = useState(10);
+  const currentPage = parsed.page || 1;
   const navigate = useNavigate();
   useEffect(() => {
     if (data) {
@@ -88,6 +94,12 @@ const AllTransaction = () => {
                     )}
                   </tbody>
                 </table>
+                <div className="overflow-x-auto"></div>
+                <Pagination
+                  page={currentPage}
+                  total={count}
+                  perPage={perPage}
+                />
               </>
             )}
             {transactionData && transactionData.length == 0 && (

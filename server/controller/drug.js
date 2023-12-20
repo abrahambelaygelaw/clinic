@@ -1,4 +1,5 @@
 import Drug from "../models/Drug.js";
+import Transaction from "../models/Transaction.js";
 
 const addDrug = (req, res) => {
   const formData = req.body;
@@ -66,6 +67,7 @@ const deleteDrug = async (req, res) => {
   const { id } = req.params;
   try {
     const deletedDrug = await Drug.findByIdAndDelete(id);
+    await Transaction.findOneAndDelete({ drug: deleteDrug._id });
     if (!deletedDrug) {
       return res.status(404).json({ message: "Drug not found" });
     }

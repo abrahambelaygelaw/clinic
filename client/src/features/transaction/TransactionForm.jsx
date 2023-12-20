@@ -38,14 +38,6 @@ const TransactionForm = () => {
         setTransactionData((prev) => {
           return [res.data, ...prev];
         });
-        toast.success("Transaction saved successfully", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
 
         setShowForm(false);
       } catch (error) {
