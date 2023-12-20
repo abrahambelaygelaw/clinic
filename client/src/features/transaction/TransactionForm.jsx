@@ -8,7 +8,7 @@ import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
 const TransactionForm = () => {
   const { showForm, setShowForm, drugData } = useTransaction();
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
   const { setTransactionData } = useTransaction();
   const {
     errors,
@@ -31,6 +31,7 @@ const TransactionForm = () => {
     validationSchema: transactionValidationSchema,
     enableReinitialize: true,
     onSubmit: async () => {
+      setLoading(true);
       try {
         const res = await axiosWithAuth.post(`transaction`, {
           ...values,
@@ -57,6 +58,8 @@ const TransactionForm = () => {
           pauseOnHover: true,
           draggable: true,
         });
+      } finally {
+        setLoading(false);
       }
     },
   });
