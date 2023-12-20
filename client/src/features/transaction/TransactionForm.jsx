@@ -31,13 +31,12 @@ const TransactionForm = () => {
     onSubmit: async () => {
       setLoading(true);
       try {
-        await axiosWithAuth.post(`transaction`, {
+        const res = await axiosWithAuth.post(`transaction`, {
           ...values,
           drug: drugData._id,
         });
-        const res = axiosWithAuth.get(`transaction/${drugData._id}`);
         setTransactionData((prev) => {
-          return res.data;
+          return [res.data, ...prev];
         });
         toast.success("Transaction saved successfully", {
           position: "top-right",
@@ -47,6 +46,7 @@ const TransactionForm = () => {
           pauseOnHover: true,
           draggable: true,
         });
+
         setShowForm(false);
       } catch (error) {
         toast.error("Error submitting transaction", {
