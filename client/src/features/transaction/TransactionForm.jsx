@@ -1,4 +1,3 @@
-import { useNavigate, useParams } from "react-router-dom";
 import useTransaction from "../../hooks/useTransaction";
 import axiosWithAuth from "../../utility/axiosWithAuth";
 import { toast, ToastContainer } from "react-toastify";
@@ -24,7 +23,6 @@ const TransactionForm = () => {
       documentRef: "",
       in: 0,
       out: 0,
-      expDate: "",
       batchNo: "",
       remark: "",
     },
@@ -38,11 +36,11 @@ const TransactionForm = () => {
           drug: drugData._id,
         });
         setTransactionData((prev) => {
-          return [...prev, res];
+          return [...prev, res.data];
         });
         toast.success("Transaction saved successfully", {
           position: "top-right",
-          autoClose: 2000, // Time in milliseconds
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -52,7 +50,7 @@ const TransactionForm = () => {
       } catch (error) {
         toast.error("Error submitting transaction", {
           position: "top-right",
-          autoClose: 2000, // Time in milliseconds
+          autoClose: 2000,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: true,
@@ -191,23 +189,6 @@ const TransactionForm = () => {
                   required
                 />
               </div>{" "}
-            </div>
-            <div>
-              <label
-                htmlFor="expDate"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Expire Date
-              </label>
-              <input
-                onChange={handleChange}
-                value={values.expDate}
-                type="date"
-                id="expDate"
-                name="expDate"
-                onBlur={handleBlur}
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
             </div>
             <div>
               <label

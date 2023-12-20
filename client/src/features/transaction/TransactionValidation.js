@@ -8,7 +8,6 @@ const transactionValidationSchema = Yup.object().shape({
   out: Yup.number()
     .min(0, "Minimum value must be at least 0")
     .required("out value is required"),
-  expDate: Yup.date().required("date is required"),
   batchNo: Yup.string(),
   remark: Yup.string(),
 });

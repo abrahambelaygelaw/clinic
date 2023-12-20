@@ -28,10 +28,6 @@ const TransactionSchema = mongoose.Schema({
     type: Number,
     required: true,
   },
-  expDate: {
-    type: Date,
-    required: true,
-  },
   batchNo: {
     type: String,
   },
