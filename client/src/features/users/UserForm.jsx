@@ -13,7 +13,6 @@ const UserForm = ({ setUsers }) => {
     setLoading(true);
     try {
       const res = await axiosWithAuth.post("/user", values);
-      console.log("new user ", res);
       setUsers((prev) => {
         return [...prev, res.data];
       });
@@ -32,7 +31,6 @@ const UserForm = ({ setUsers }) => {
     }
   };
   const handleEdit = async () => {
-    console.log("edit ");
     setLoading(true);
     try {
       await axiosWithAuth.put(`user/${itemToEdit._id}`, values);

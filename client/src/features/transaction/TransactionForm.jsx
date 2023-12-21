@@ -11,20 +11,17 @@ const TransactionForm = () => {
   const [loading, setLoading] = useState(false);
   const submit = async () => {
     setLoading(true);
-    // console.log("loading", loading);
     try {
       const res = await axiosWithAuth.post(`transaction`, {
         ...values,
         drug: drugData._id,
       });
-      console.log("res", res);
       setTransactionData((prev) => {
         return [res.data, ...prev];
       });
 
       setShowForm(false);
     } catch (error) {
-      console.log("error", error);
       toast.error("Error submitting transaction", {
         position: "top-right",
         autoClose: 2000,
