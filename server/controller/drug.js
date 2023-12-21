@@ -16,8 +16,10 @@ const addDrug = (req, res) => {
 };
 const getDrug = async (req, res) => {
   const id = req.params.id;
+  console.log(id);
   try {
     const response = await Drug.findById(id);
+    console.log(response);
     res.send(response);
   } catch (error) {
     res.status(500).json({ message: error.message });

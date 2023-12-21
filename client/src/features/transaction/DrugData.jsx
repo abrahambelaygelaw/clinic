@@ -13,8 +13,10 @@ const DrugData = () => {
   useEffect(() => {
     if (data) {
       setDrugData(data);
+      console.log(drugData);
     }
   }, [data]);
+  console.log("loaded", drugData);
   return (
     <>
       {drugData && (

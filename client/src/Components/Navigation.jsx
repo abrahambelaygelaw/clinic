@@ -58,7 +58,7 @@ const Navigation = () => {
               Drugs
             </NavLink>
             <NavLink to="/transaction" className=" hover:text-gray-500">
-              Transactions
+              History
             </NavLink>
             {roles.includes("admin") && (
               <NavLink to="/users" className=" hover:text-gray-500">

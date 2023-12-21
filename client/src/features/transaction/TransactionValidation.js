@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-const transactionValidationSchema = Yup.object().shape({
+const transactionValidationSchema = Yup.object({
   place: Yup.string().required("place is required"),
   documentRef: Yup.string(),
   in: Yup.number()

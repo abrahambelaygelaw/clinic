@@ -1,14 +1,42 @@
 import useTransaction from "../../hooks/useTransaction";
-import axiosWithAuth from "../../utility/axiosWithAuth";
 import { toast, ToastContainer } from "react-toastify";
 import transactionValidationSchema from "./TransactionValidation";
 import { useFormik } from "formik";
 import { useState } from "react";
 import ClipLoader from "react-spinners/ClipLoader";
+import axiosWithAuth from "../../utility/axiosWithAuth";
 const TransactionForm = () => {
-  const { showForm, setShowForm, drugData } = useTransaction();
+  const { showForm, setShowForm, drugData, setTransactionData } =
+    useTransaction();
   const [loading, setLoading] = useState(false);
-  const { setTransactionData } = useTransaction();
+  const submit = async () => {
+    setLoading(true);
+    // console.log("loading", loading);
+    try {
+      const res = await axiosWithAuth.post(`transaction`, {
+        ...values,
+        drug: drugData._id,
+      });
+      console.log("res", res);
+      setTransactionData((prev) => {
+        return [res.data, ...prev];
+      });
+
+      setShowForm(false);
+    } catch (error) {
+      console.log("error", error);
+      toast.error("Error submitting transaction", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
   const {
     errors,
     touched,
@@ -28,31 +56,7 @@ const TransactionForm = () => {
     },
     validationSchema: transactionValidationSchema,
     enableReinitialize: true,
-    onSubmit: async () => {
-      setLoading(true);
-      try {
-        const res = await axiosWithAuth.post(`transaction`, {
-          ...values,
-          drug: drugData._id,
-        });
-        setTransactionData((prev) => {
-          return [res.data, ...prev];
-        });
-
-        setShowForm(false);
-      } catch (error) {
-        toast.error("Error submitting transaction", {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-        });
-      } finally {
-        setLoading(false);
-      }
-    },
+    onSubmit: submit,
   });
 
   return (
@@ -179,7 +183,6 @@ const TransactionForm = () => {
                   name="out"
                   onBlur={handleBlur}
                   className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  required
                 />
               </div>{" "}
             </div>
